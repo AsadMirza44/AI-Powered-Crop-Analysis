@@ -90,7 +90,7 @@ def overview_context() -> dict:
             "Local Django monitoring board is now the active implementation path.",
             "TensorFlow disease inference now uses PlantVillage and PlantDoc transfer learning artifacts.",
             "Scikit-learn yield forecasting now uses FAOSTAT, PBS, NASA POWER, and SoilGrids features.",
-            "MySQL is supported through environment variables; SQLite remains the zero-setup fallback.",
+            "SQLite is the active local database for zero-setup project handover.",
         ],
     }
 
@@ -208,7 +208,7 @@ def sources_context() -> dict:
             "Yield benchmarking is still anchored to Pakistan historical averages, not district-labeled ground-truth yield targets.",
             "Disease performance is stronger than the old synthetic baseline, but field generalization is still bounded by the PlantVillage-to-PlantDoc domain gap.",
             "Irrigation and fertilizer outputs are rule-based recommendations tied to the current model inputs, not an expert-certified agronomy system.",
-            "SQLite is the active zero-setup database for local use. MySQL remains optional if you later need stricter proposal alignment or multi-user concurrency.",
+            "SQLite is used for local storage and sharing, so the current app is intended for single-machine use rather than concurrent multi-user deployment.",
         ],
         "runtime_notes": [
             "The dashboard is local-web first and intentionally avoids paid cloud dependencies.",

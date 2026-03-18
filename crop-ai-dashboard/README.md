@@ -1,18 +1,6 @@
----
-title: Smart Crop AI
-emoji: "\U0001F33E"
-colorFrom: green
-colorTo: yellow
-sdk: docker
-app_port: 7860
-suggested_hardware: cpu-basic
-startup_duration_timeout: 1h
-short_description: Django crop monitoring dashboard with TensorFlow disease detection and scikit-learn yield forecasting.
----
-
 # Smart Crop AI
 
-The repository now follows the proposal-aligned architecture directly: a `Django` web dashboard backed by `TensorFlow`, `OpenCV`, `Scikit-learn`, and a local database.
+The repository follows the proposal-aligned architecture directly: a `Django` web dashboard backed by `TensorFlow`, `OpenCV`, `Scikit-learn`, and a local database.
 
 ## Active Stack
 
@@ -20,8 +8,8 @@ The repository now follows the proposal-aligned architecture directly: a `Django
 - `Disease pipeline`: TensorFlow + OpenCV
 - `Yield pipeline`: Scikit-learn
 - `Recommendations`: rule-based irrigation and fertilizer engine
-- `Database`: SQLite by default, `MySQL Community` ready through environment variables
-- `Delivery`: local web application
+- `Database`: SQLite
+- `Delivery`: local web application for clone-and-run handover
 
 ## What Is Working Now
 
@@ -34,65 +22,71 @@ The repository now follows the proposal-aligned architecture directly: a `Django
 - Django admin support
 - local tests for overview, disease upload, yield forecasting, and recommendation routes
 
-## Quick Start
+## Run Locally
+
+The repository already includes the trained model files and processed dataset files needed for normal use.
+
+For normal project execution, do **not** retrain the models.
+
+### Prerequisites
+
+- Python `3.11` recommended
+- Windows PowerShell
+
+### Setup
+
+If you cloned the outer repository, first move into the Django project folder:
 
 ```powershell
-cd C:\Users\AsadMirza\source\repos\crop-ai-dashboard
+git clone <your-github-repo-url>
+cd AI-Powered-Crop-Analysis\crop-ai-dashboard
+```
+
+Create and activate a virtual environment:
+
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+```
+
+Install dependencies:
+
+```powershell
 pip install -r requirements.txt
-copy .env.example .env
-python training\disease\train_demo_disease_model.py
-python training\yield\train_yield_model.py
+```
+
+Apply database migrations:
+
+```powershell
 python manage.py migrate
+```
+
+Start the project:
+
+```powershell
 python manage.py runserver
 ```
 
 Open `http://127.0.0.1:8000`.
 
-## Hugging Face Spaces Deployment
+The repository already includes a local `.env` file for zero-setup sharing. Edit it only if you want to change local host settings.
 
-This repository is prepared for `Hugging Face Spaces` as a `Docker` Space.
+### Main Pages
 
-Files added for deployment:
+- `/` overview dashboard
+- `/disease/` crop disease analysis
+- `/yield/` yield prediction
+- `/recommendations/` recommendation center
+- `/metrics/` model metrics
+- `/sources/` data sources and limitations
 
-- `Dockerfile`
-- `.dockerignore`
-- `space-entrypoint.sh`
-- `requirements-space.txt`
+### Optional Validation
 
-Recommended steps:
+Run the built-in tests:
 
-1. Create a new `Docker` Space on Hugging Face.
-2. Push this repository to the Space.
-3. Add these Space secrets/variables:
-   - `DJANGO_SECRET_KEY`
-   - `DJANGO_DEBUG=0`
-   - `DJANGO_ALLOWED_HOSTS=<your-space-subdomain>.hf.space`
-   - `DJANGO_CSRF_TRUSTED_ORIGINS=https://<your-space-subdomain>.hf.space`
-4. Let the build finish and verify:
-   - `/`
-   - `/disease/`
-   - `/yield/`
-   - `/recommendations/`
-   - `/metrics/`
-   - `/sources/`
-
-Important deployment limitation:
-
-- the free Space is effectively stateless for this project, so `SQLite` history, uploaded images, and generated overlays can reset after rebuilds or restarts.
-
-## MySQL Option
-
-If MySQL Community is installed locally, set these variables in `.env` or your shell before running:
-
-- `MYSQL_DB`
-- `MYSQL_USER`
-- `MYSQL_PASSWORD`
-- `MYSQL_HOST`
-- `MYSQL_PORT`
-
-If those variables are empty, Django falls back to `SQLite` so the project still runs without extra setup.
+```powershell
+python manage.py test
+```
 
 ## Data And Model Status
 
@@ -101,14 +95,12 @@ The app is fully runnable and the active artifacts now use real public data sour
 - disease model: TensorFlow MobileNetV2 transfer-learning baseline trained from `PlantVillage` and `PlantDoc`
 - yield model: scikit-learn regressor trained from `FAOSTAT` crop statistics, `PBS` crop-output context, `NASA POWER` weather, and `SoilGrids` soil properties
 
-## Key Commands
+## Optional Retraining
 
-```powershell
-python manage.py runserver
-python manage.py test
-python training\disease\train_demo_disease_model.py
-python training\yield\train_yield_model.py
-```
+Retraining is optional. Use it only if you want to rebuild the shipped model artifacts.
+
+- `python training\disease\train_demo_disease_model.py`
+- `python training\yield\train_yield_model.py`
 
 ## Key Data Outputs
 
@@ -119,6 +111,4 @@ python training\yield\train_yield_model.py
 
 ## Archived Legacy Code
 
-The earlier `Next.js + FastAPI` prototype was moved out of this repository to:
-
-`C:\Users\AsadMirza\source\repos\crop-ai-dashboard-legacy-archive`
+The earlier `Next.js + FastAPI` prototype was moved out of this repository into a separate local archive and is not part of the handover package.

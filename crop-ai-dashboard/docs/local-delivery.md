@@ -15,16 +15,6 @@ python manage.py runserver
 - `media/` for uploaded images and overlays
 - `models/` for TensorFlow and scikit-learn artifacts
 
-## MySQL Community Path
-
-If MySQL Community is installed, the same app can switch databases by setting:
-
-- `MYSQL_DB`
-- `MYSQL_USER`
-- `MYSQL_PASSWORD`
-- `MYSQL_HOST`
-- `MYSQL_PORT`
-
 ## Why This Fits The Proposal
 
 - Python-first architecture
