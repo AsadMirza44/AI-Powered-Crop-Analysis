@@ -52,8 +52,11 @@ python -m venv .venv
 Install dependencies:
 
 ```powershell
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+`requirements.txt` is the normal clone-and-run dependency file. It is enough for running the dashboard locally.
 
 Apply database migrations:
 
@@ -98,6 +101,19 @@ The app is fully runnable and the active artifacts now use real public data sour
 ## Optional Retraining
 
 Retraining is optional. Use it only if you want to rebuild the shipped model artifacts.
+
+Dependency rule:
+
+- for normal project usage, install only `requirements.txt`
+- for retraining, keep the normal runtime install and then install `requirements-training.txt` as an extra layer
+
+If you already completed the normal setup above, install the extra training dependencies with:
+
+```powershell
+pip install -r requirements-training.txt
+```
+
+If you are setting up a retraining-only environment from scratch, `requirements-training.txt` already includes `requirements.txt`.
 
 - `python training\disease\train_demo_disease_model.py`
 - `python training\yield\train_yield_model.py`
