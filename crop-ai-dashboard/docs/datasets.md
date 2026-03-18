@@ -16,15 +16,13 @@ Use free and public data sources that support a proposal-aligned implementation 
 
 - `PlantVillage`: baseline disease classification
 - `PlantDoc`: field-style disease images for realism
-
-### Optional Source
-
-- custom smartphone images collected locally for final evaluation
+- `Mendeley crop disease datasets`: cotton and sugarcane disease classes used for crop expansion
 
 ### Disease Data Notes
 
-- Start with PlantVillage to build the first stable TensorFlow classifier.
+- Start with PlantVillage to build the first stable TensorFlow classifier for maize, potato, and tomato.
 - Use PlantDoc to improve robustness on more realistic backgrounds.
+- Use the public Mendeley cotton and sugarcane disease sets to extend crop coverage without paid data collection.
 - Use OpenCV during preprocessing and explainability rendering.
 
 ## Yield Data
@@ -45,12 +43,12 @@ Use free and public data sources that support a proposal-aligned implementation 
 
 ## Crop Coverage Strategy
 
-The plan stays broad, but data quality controls the final validated crop list.
+The current validated crop list is:
 
-- disease coverage target: `tomato`, `potato`, `maize/corn`
-- yield coverage target: `maize`, `wheat`, `rice`
+- disease coverage: `tomato`, `potato`, `maize`, `cotton`, `sugarcane`
+- yield coverage: `maize`, `wheat`, `rice`, `cotton`, `sugarcane`
 
-If some crops do not have clean free historical data, keep the architecture crop-aware and document which crops are validated in the final report.
+If future crops do not have clean free historical data or labeled disease images, keep the architecture crop-aware and document which crops are validated.
 
 ## Data Assembly Rules
 

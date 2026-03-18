@@ -14,8 +14,8 @@ The repository follows the proposal-aligned architecture directly: a `Django` we
 ## What Is Working Now
 
 - monitoring overview dashboard
-- disease upload flow with PlantVillage + PlantDoc TensorFlow prediction and visual overlay
-- yield forecasting form backed by FAOSTAT, PBS, NASA POWER, and SoilGrids features
+- disease upload flow for `maize`, `potato`, `tomato`, `cotton`, and `sugarcane` with TensorFlow prediction and visual overlay
+- yield forecasting form for `maize`, `wheat`, `rice`, `cotton`, and `sugarcane`, backed by FAOSTAT, PBS, NASA POWER, and SoilGrids features
 - irrigation and fertilizer recommendations
 - separate recommendation center
 - stored prediction history
@@ -95,8 +95,13 @@ python manage.py test
 
 The app is fully runnable and the active artifacts now use real public data sources:
 
-- disease model: TensorFlow MobileNetV2 transfer-learning baseline trained from `PlantVillage` and `PlantDoc`
+- disease model: TensorFlow MobileNetV2 transfer-learning baseline trained from `PlantVillage`, `PlantDoc`, and public `Mendeley` cotton/sugarcane disease datasets
 - yield model: scikit-learn regressor trained from `FAOSTAT` crop statistics, `PBS` crop-output context, `NASA POWER` weather, and `SoilGrids` soil properties
+
+Validated crop coverage:
+
+- disease: `maize`, `potato`, `tomato`, `cotton`, `sugarcane`
+- yield: `maize`, `wheat`, `rice`, `cotton`, `sugarcane`
 
 ## Optional Retraining
 
@@ -116,7 +121,7 @@ pip install -r requirements-training.txt
 If you are setting up a retraining-only environment from scratch, `requirements-training.txt` already includes `requirements.txt`.
 
 - `python training\disease\train_demo_disease_model.py`
-- `python training\yield\train_yield_model.py`
+- `python training\yield\train_yield_model.py --refresh-sources`
 
 ## Key Data Outputs
 

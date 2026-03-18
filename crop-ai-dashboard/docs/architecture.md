@@ -23,8 +23,10 @@ The Django implementation is now the only active runtime path in this repository
 
 - `SQLite` is the active database and the app runs immediately without extra database setup.
 - TensorFlow and scikit-learn artifacts are stored under `models/`.
-- Disease training now uses `PlantVillage + PlantDoc`.
+- Disease training now uses `PlantVillage + PlantDoc + Mendeley cotton/sugarcane datasets`.
 - Yield training now uses `FAOSTAT + PBS + NASA POWER + SoilGrids`.
+- Active disease crop coverage is `maize`, `potato`, `tomato`, `cotton`, and `sugarcane`.
+- Active yield crop coverage is `maize`, `wheat`, `rice`, `cotton`, and `sugarcane`.
 - Uploaded media and overlays are stored under `media/`.
 
 ## Current Limitation

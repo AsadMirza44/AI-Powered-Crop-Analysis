@@ -61,14 +61,79 @@ PLANTDOC_FOLDERS = {
 
 PLANTDOC_TREE_URL = "https://api.github.com/repos/pratikkayal/PlantDoc-Dataset/git/trees/master?recursive=1"
 PLANTDOC_RAW_ROOT = "https://raw.githubusercontent.com/pratikkayal/PlantDoc-Dataset/master/"
+MENDELEY_PUBLIC_API = "https://data.mendeley.com/public-api/datasets/{dataset_id}"
+MENDELEY_ARCHIVES = [
+    {
+        "dataset_id": "t9hgvk2h9p",
+        "filename": "Cotton_Original_Dataset.zip",
+        "source": "mendeley_cotton",
+        "folder_map": {
+            "Cotton_Original_Dataset/Alternaria Leaf Spot/": "cotton_alternaria_leaf_spot",
+            "Cotton_Original_Dataset/Bacterial Blight/": "cotton_bacterial_blight",
+            "Cotton_Original_Dataset/Fusarium Wilt/": "cotton_fusarium_wilt",
+            "Cotton_Original_Dataset/Healthy Leaf/": "cotton_healthy",
+            "Cotton_Original_Dataset/Verticillium Wilt/": "cotton_verticillium_wilt",
+        },
+    },
+    {
+        "dataset_id": "355y629ynj",
+        "filename": "Healthy Leaves.zip",
+        "source": "mendeley_sugarcane",
+        "folder_map": {
+            "Healthy Leaves/": "sugarcane_healthy",
+        },
+    },
+    {
+        "dataset_id": "355y629ynj",
+        "filename": "BrownRust.zip",
+        "source": "mendeley_sugarcane",
+        "folder_map": {
+            "BrownRust/": "sugarcane_brown_rust",
+        },
+    },
+    {
+        "dataset_id": "355y629ynj",
+        "filename": "Pokkah Boeng.zip",
+        "source": "mendeley_sugarcane",
+        "folder_map": {
+            "Pokkah Boeng/": "sugarcane_pokkah_boeng",
+        },
+    },
+    {
+        "dataset_id": "355y629ynj",
+        "filename": "smut.zip",
+        "source": "mendeley_sugarcane",
+        "folder_map": {
+            "smut/": "sugarcane_smut",
+        },
+    },
+    {
+        "dataset_id": "355y629ynj",
+        "filename": "Viral Disease.zip",
+        "source": "mendeley_sugarcane",
+        "folder_map": {
+            "Viral Disease/": "sugarcane_viral_disease",
+        },
+    },
+    {
+        "dataset_id": "355y629ynj",
+        "filename": "Yellow Leaf.zip",
+        "source": "mendeley_sugarcane",
+        "folder_map": {
+            "Yellow Leaf/": "sugarcane_yellow_leaf",
+        },
+    },
+]
 IMAGE_SIZE = (160, 160)
 TARGET_CLASSES = list(DISEASE_CLASS_DETAILS)
+IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png"}
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train the proposal-aligned disease model.")
     parser.add_argument("--max-plantvillage-per-class", type=int, default=220)
     parser.add_argument("--max-plantdoc-per-class", type=int, default=55)
+    parser.add_argument("--max-mendeley-per-class", type=int, default=220)
     parser.add_argument("--head-epochs", type=int, default=3)
     parser.add_argument("--finetune-epochs", type=int, default=2)
     parser.add_argument("--batch-size", type=int, default=24)
@@ -171,6 +236,72 @@ def download_plantdoc_subset(max_per_class: int, refresh_tree: bool) -> tuple[li
     return images, labels, manifest
 
 
+def resolve_mendeley_download_url(dataset_id: str, filename: str) -> str:
+    response = requests.get(MENDELEY_PUBLIC_API.format(dataset_id=dataset_id), timeout=90)
+    response.raise_for_status()
+    payload = response.json()
+    for file_info in payload.get("files", []):
+        if file_info.get("filename") == filename:
+            return file_info["content_details"]["download_url"]
+    raise RuntimeError(f"Could not locate {filename} in Mendeley dataset {dataset_id}.")
+
+
+def download_mendeley_subset(max_per_class: int) -> tuple[list[np.ndarray], list[str], list[dict]]:
+    images: list[np.ndarray] = []
+    labels: list[str] = []
+    manifest: list[dict] = []
+    rng = random.Random(42)
+    archive_root = RAW_DIR / "mendeley_archives"
+    archive_root.mkdir(parents=True, exist_ok=True)
+
+    for spec in MENDELEY_ARCHIVES:
+        archive_path = archive_root / spec["filename"]
+        if not archive_path.exists():
+            download_url = resolve_mendeley_download_url(spec["dataset_id"], spec["filename"])
+            response = requests.get(download_url, timeout=240)
+            response.raise_for_status()
+            archive_path.write_bytes(response.content)
+
+        with zipfile.ZipFile(archive_path) as archive:
+            member_names = archive.namelist()
+            for folder, canonical_label in spec["folder_map"].items():
+                selected_members = [
+                    member
+                    for member in member_names
+                    if member.startswith(folder) and Path(member).suffix.lower() in IMAGE_SUFFIXES
+                ]
+                if not selected_members:
+                    continue
+                rng.shuffle(selected_members)
+                selected_members = selected_members[:max_per_class]
+                target_dir = RAW_DIR / "mendeley" / canonical_label
+                target_dir.mkdir(parents=True, exist_ok=True)
+
+                for member in selected_members:
+                    local_path = target_dir / safe_file_name(f"{spec['filename']}::{member}")
+                    if not local_path.exists():
+                        local_path.write_bytes(archive.read(member))
+
+                    image_bytes = np.frombuffer(local_path.read_bytes(), dtype=np.uint8)
+                    image_bgr = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
+                    if image_bgr is None:
+                        continue
+                    image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+                    images.append(preprocess_rgb_image(image_rgb, IMAGE_SIZE))
+                    labels.append(canonical_label)
+                    manifest.append(
+                        {
+                            "source": spec["source"],
+                            "canonical_label": canonical_label,
+                            "display_name": DISEASE_CLASS_DETAILS[canonical_label]["display_name"],
+                            "file_path": str(local_path.relative_to(ROOT_DIR)),
+                            "source_path": f"{spec['filename']}::{member}",
+                        }
+                    )
+
+    return images, labels, manifest
+
+
 def load_plantvillage_subset(max_per_class: int) -> tuple[list[np.ndarray], list[str], list[dict]]:
     root = resolve_plantvillage_root()
     images: list[np.ndarray] = []
@@ -234,28 +365,38 @@ def save_manifest(manifest: list[dict]) -> None:
         writer.writerows(manifest)
 
 
-def build_dataset(max_plantvillage_per_class: int, max_plantdoc_per_class: int, refresh_tree: bool) -> tuple[np.ndarray, np.ndarray, list[dict], dict]:
+def build_dataset(
+    max_plantvillage_per_class: int,
+    max_plantdoc_per_class: int,
+    max_mendeley_per_class: int,
+    refresh_tree: bool,
+) -> tuple[np.ndarray, np.ndarray, list[dict], dict]:
     pv_images, pv_labels, pv_manifest = load_plantvillage_subset(max_plantvillage_per_class)
     pd_images, pd_labels, pd_manifest = download_plantdoc_subset(max_plantdoc_per_class, refresh_tree)
+    md_images, md_labels, md_manifest = download_mendeley_subset(max_mendeley_per_class)
 
-    combined_images = pv_images + pd_images
-    combined_labels = pv_labels + pd_labels
-    manifest = pv_manifest + pd_manifest
+    combined_images = pv_images + pd_images + md_images
+    combined_labels = pv_labels + pd_labels + md_labels
+    manifest = pv_manifest + pd_manifest + md_manifest
     save_manifest(manifest)
 
     if not combined_images:
-        raise RuntimeError("No disease images were collected from PlantVillage or PlantDoc.")
+        raise RuntimeError("No disease images were collected from the configured public datasets.")
+
+    missing_classes = sorted(set(TARGET_CLASSES) - set(combined_labels))
+    if missing_classes:
+        raise RuntimeError(f"Disease dataset is missing required classes: {', '.join(missing_classes)}")
 
     x = np.asarray(combined_images, dtype=np.float32)
     label_to_index = {label: index for index, label in enumerate(TARGET_CLASSES)}
     y_indices = np.asarray([label_to_index[label] for label in combined_labels], dtype=np.int32)
     y = tf.keras.utils.to_categorical(y_indices, num_classes=len(TARGET_CLASSES))
 
-    counts_by_source: dict[str, dict[str, int]] = {"plant_village": defaultdict(int), "plantdoc": defaultdict(int)}
+    counts_by_source: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     for item in manifest:
         counts_by_source[item["source"]][item["canonical_label"]] += 1
 
-    return x, y, manifest, counts_by_source
+    return x, y, manifest, {source: dict(values) for source, values in counts_by_source.items()}
 
 
 def build_model(num_classes: int) -> tuple[tf.keras.Model, tf.keras.Model]:
@@ -301,6 +442,7 @@ def train() -> None:
     x, y, manifest, counts_by_source = build_dataset(
         max_plantvillage_per_class=args.max_plantvillage_per_class,
         max_plantdoc_per_class=args.max_plantdoc_per_class,
+        max_mendeley_per_class=args.max_mendeley_per_class,
         refresh_tree=args.refresh_plantdoc_tree,
     )
     class_indices = np.argmax(y, axis=1)
@@ -357,10 +499,12 @@ def train() -> None:
     model.save(model_path)
 
     class_counts: dict[str, dict[str, int]] = {}
+    available_sources = sorted(counts_by_source)
     for canonical_label in TARGET_CLASSES:
         class_counts[canonical_label] = {
-            "plant_village": int(counts_by_source["plant_village"].get(canonical_label, 0)),
-            "plantdoc": int(counts_by_source["plantdoc"].get(canonical_label, 0)),
+            source: int(counts_by_source.get(source, {}).get(canonical_label, 0))
+            for source in available_sources
+            if int(counts_by_source.get(source, {}).get(canonical_label, 0)) > 0
         }
 
     metadata = {
@@ -377,9 +521,9 @@ def train() -> None:
         "manifest_rows": len(manifest),
         "class_counts": class_counts,
         "notes": (
-            "Real-data TensorFlow disease baseline built from PlantVillage and PlantDoc. "
-            "MobileNetV2 is used for transfer learning, OpenCV handles preprocessing, and crop-aware filtering "
-            "is applied at inference time."
+            "Real-data TensorFlow disease baseline built from PlantVillage, PlantDoc, and crop-specific "
+            "Mendeley disease datasets for cotton and sugarcane. MobileNetV2 is used for transfer learning, "
+            "OpenCV handles preprocessing, and crop-aware filtering is applied at inference time."
         ),
     }
     metadata_path.write_text(json.dumps(metadata, indent=2), encoding="utf-8")

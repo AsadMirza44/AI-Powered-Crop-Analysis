@@ -14,22 +14,120 @@
   "best_model": "random_forest",
   "candidate_metrics": {
     "linear_regression": {
-      "rmse": 0.8883,
-      "mae": 0.8178,
-      "r2": 0.5407
+      "rmse": 5.6226,
+      "mae": 3.4739,
+      "r2": 0.956
     },
     "random_forest": {
-      "rmse": 0.6315,
-      "mae": 0.5041,
-      "r2": 0.7679
+      "rmse": 1.9055,
+      "mae": 1.1597,
+      "r2": 0.9949
     },
     "hist_gradient_boosting": {
-      "rmse": 0.7953,
-      "mae": 0.5642,
-      "r2": 0.6319
+      "rmse": 5.0473,
+      "mae": 2.9802,
+      "r2": 0.9646
     }
   },
   "historical_series": {
+    "cotton": [
+      {
+        "year": 2001,
+        "yield_t_ha": 1.7381
+      },
+      {
+        "year": 2002,
+        "yield_t_ha": 1.8651
+      },
+      {
+        "year": 2003,
+        "yield_t_ha": 1.7152
+      },
+      {
+        "year": 2004,
+        "yield_t_ha": 2.2801
+      },
+      {
+        "year": 2005,
+        "yield_t_ha": 2.0424
+      },
+      {
+        "year": 2006,
+        "yield_t_ha": 2.0333
+      },
+      {
+        "year": 2007,
+        "yield_t_ha": 1.8587
+      },
+      {
+        "year": 2008,
+        "yield_t_ha": 2.0462000000000002
+      },
+      {
+        "year": 2009,
+        "yield_t_ha": 2.0395
+      },
+      {
+        "year": 2010,
+        "yield_t_ha": 2.0875
+      },
+      {
+        "year": 2011,
+        "yield_t_ha": 2.3303000000000003
+      },
+      {
+        "year": 2012,
+        "yield_t_ha": 2.2114000000000003
+      },
+      {
+        "year": 2013,
+        "yield_t_ha": 2.2724
+      },
+      {
+        "year": 2014,
+        "yield_t_ha": 2.3021
+      },
+      {
+        "year": 2015,
+        "yield_t_ha": 1.6787999999999998
+      },
+      {
+        "year": 2016,
+        "yield_t_ha": 2.1041999999999996
+      },
+      {
+        "year": 2017,
+        "yield_t_ha": 2.1683000000000003
+      },
+      {
+        "year": 2018,
+        "yield_t_ha": 2.0348
+      },
+      {
+        "year": 2019,
+        "yield_t_ha": 1.7798
+      },
+      {
+        "year": 2020,
+        "yield_t_ha": 1.6616
+      },
+      {
+        "year": 2021,
+        "yield_t_ha": 2.1147
+      },
+      {
+        "year": 2022,
+        "yield_t_ha": 1.1240999999999999
+      },
+      {
+        "year": 2023,
+        "yield_t_ha": 2.0782
+      },
+      {
+        "year": 2024,
+        "yield_t_ha": 1.7133
+      }
+    ],
     "maize": [
       {
         "year": 2001,
@@ -226,6 +324,104 @@
         "yield_t_ha": 3.7405999999999997
       }
     ],
+    "sugarcane": [
+      {
+        "year": 2001,
+        "yield_t_ha": 45.385400000000004
+      },
+      {
+        "year": 2002,
+        "yield_t_ha": 48.056
+      },
+      {
+        "year": 2003,
+        "yield_t_ha": 47.3407
+      },
+      {
+        "year": 2004,
+        "yield_t_ha": 50.0884
+      },
+      {
+        "year": 2005,
+        "yield_t_ha": 48.8867
+      },
+      {
+        "year": 2006,
+        "yield_t_ha": 49.229
+      },
+      {
+        "year": 2007,
+        "yield_t_ha": 53.209199999999996
+      },
+      {
+        "year": 2008,
+        "yield_t_ha": 51.4944
+      },
+      {
+        "year": 2009,
+        "yield_t_ha": 48.616099999999996
+      },
+      {
+        "year": 2010,
+        "yield_t_ha": 52.3684
+      },
+      {
+        "year": 2011,
+        "yield_t_ha": 55.9973
+      },
+      {
+        "year": 2012,
+        "yield_t_ha": 55.2165
+      },
+      {
+        "year": 2013,
+        "yield_t_ha": 57.5425
+      },
+      {
+        "year": 2014,
+        "yield_t_ha": 55.087199999999996
+      },
+      {
+        "year": 2015,
+        "yield_t_ha": 57.873400000000004
+      },
+      {
+        "year": 2016,
+        "yield_t_ha": 61.9973
+      },
+      {
+        "year": 2017,
+        "yield_t_ha": 62.1061
+      },
+      {
+        "year": 2018,
+        "yield_t_ha": 60.9594
+      },
+      {
+        "year": 2019,
+        "yield_t_ha": 63.8407
+      },
+      {
+        "year": 2020,
+        "yield_t_ha": 69.53410000000001
+      },
+      {
+        "year": 2021,
+        "yield_t_ha": 70.3414
+      },
+      {
+        "year": 2022,
+        "yield_t_ha": 66.71119999999999
+      },
+      {
+        "year": 2023,
+        "yield_t_ha": 74.25160000000001
+      },
+      {
+        "year": 2024,
+        "yield_t_ha": 70.60260000000001
+      }
+    ],
     "wheat": [
       {
         "year": 2001,
@@ -326,8 +522,10 @@
     ]
   },
   "historical_average": {
+    "cotton": 1.97,
     "maize": 4.164,
     "rice": 3.508,
+    "sugarcane": 57.364,
     "wheat": 2.721
   },
   "history_context": "Pakistan historical average",

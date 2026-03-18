@@ -29,3 +29,10 @@ class DiseaseViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(DiseasePrediction.objects.count(), 1)
+
+    def test_disease_page_lists_new_supported_crops(self):
+        response = self.client.get("/disease/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Cotton")
+        self.assertContains(response, "Sugarcane")

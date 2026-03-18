@@ -49,10 +49,14 @@ def yield_forecast(request):
         except FileNotFoundError as exc:
             messages.error(request, str(exc))
 
+    recent_history = result.historical_series[-6:] if result else []
     context = {
         "form": form,
         "result": result,
         "result_chart_points": build_svg_points(result.historical_series, 340, 120) if result else "",
+        "recent_history": recent_history,
+        "recent_history_span": _history_span(recent_history),
+        "full_history_span": _history_span(result.historical_series) if result else "",
         "recent_predictions": annotate_yield_records(YieldPrediction.objects.order_by("-created_at")[:5]),
         "district_profiles": DISTRICT_PROFILES,
         "district_autofill": {
@@ -84,3 +88,10 @@ def yield_forecast(request):
 
 def _default_payload() -> dict:
     return dict(YIELD_DEMO_SCENARIOS["maize_balanced"]["payload"])
+
+
+def _history_span(history: list[dict]) -> str:
+    if not history:
+        return ""
+    years = [int(point["year"]) for point in history]
+    return f"{min(years)}-{max(years)}"

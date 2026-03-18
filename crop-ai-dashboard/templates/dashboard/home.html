@@ -83,13 +83,16 @@
       <polyline class="history-line" points="{{ yield_chart_points }}" />
     </svg>
     <div class="history-grid">
-      {% for point in yield_history|slice:":6" %}
+      {% for point in yield_history_recent %}
         <div>
           <span>{{ point.year }}</span>
           <strong>{{ point.yield_t_ha|floatformat:4 }} t/ha</strong>
         </div>
       {% endfor %}
     </div>
+    {% if yield_history_span %}
+      <p class="muted">Latest official yield history shown: {{ yield_history_span }}</p>
+    {% endif %}
   </article>
 
   <article class="panel">

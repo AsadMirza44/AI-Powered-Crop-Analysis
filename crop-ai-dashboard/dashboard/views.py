@@ -20,9 +20,10 @@ def dashboard_home(request):
 def history_view(request):
     disease_items = annotate_disease_records(DiseasePrediction.objects.order_by("-created_at")[:10])
     yield_items = annotate_yield_records(YieldPrediction.objects.order_by("-created_at")[:10])
+    recent_chart_items = list(YieldPrediction.objects.order_by("-created_at")[:8])
     yield_chart = [
         {"year": item.year, "yield_t_ha": item.predicted_yield_t_ha}
-        for item in YieldPrediction.objects.order_by("created_at")[:8]
+        for item in reversed(recent_chart_items)
     ]
     context = {
         "disease_items": disease_items,

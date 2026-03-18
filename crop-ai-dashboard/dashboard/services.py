@@ -84,12 +84,14 @@ def overview_context() -> dict:
         "spotlight_crop_label": CROP_PROFILES[spotlight_crop]["label"],
         "spotlight_district": spotlight_district,
         "yield_history": history,
+        "yield_history_recent": history[-6:],
+        "yield_history_span": _history_span(history[-6:]),
         "yield_chart_points": build_svg_points(history, 340, 120),
         "province_summaries": province_summaries,
         "operations_notes": [
             "Local Django monitoring board is now the active implementation path.",
-            "TensorFlow disease inference now uses PlantVillage and PlantDoc transfer learning artifacts.",
-            "Scikit-learn yield forecasting now uses FAOSTAT, PBS, NASA POWER, and SoilGrids features.",
+            "TensorFlow disease inference now uses PlantVillage, PlantDoc, and free crop-specific Mendeley disease datasets.",
+            "Scikit-learn yield forecasting now uses FAOSTAT, PBS, NASA POWER, and SoilGrids features across five crops.",
             "SQLite is the active local database for zero-setup project handover.",
         ],
     }
@@ -176,9 +178,16 @@ def sources_context() -> dict:
                 "status": "Active in the current TensorFlow disease model",
             },
             {
+                "title": "Mendeley Data Crop Disease Sets",
+                "category": "Disease imagery",
+                "use_case": "Crop-specific cotton and sugarcane disease images used to extend the TensorFlow classifier beyond the PlantVillage crop list.",
+                "access": "Free public datasets under CC BY 4.0",
+                "status": "Active in the current TensorFlow disease model",
+            },
+            {
                 "title": "FAOSTAT",
                 "category": "Yield history",
-                "use_case": "Historical Pakistan crop-yield series for maize, wheat, and rice.",
+                "use_case": "Historical Pakistan crop-yield series for maize, wheat, rice, cotton, and sugarcane.",
                 "access": "Free public statistics",
                 "status": "Active in the scikit-learn yield dataset",
             },
@@ -249,3 +258,10 @@ def _sum_source_counts(class_counts: dict) -> list[dict]:
             label = source.replace("_", " ").title()
             totals[label] = totals.get(label, 0) + int(count)
     return [{"label": label, "count": count} for label, count in totals.items()]
+
+
+def _history_span(history: list[dict]) -> str:
+    if not history:
+        return ""
+    years = [int(point["year"]) for point in history]
+    return f"{min(years)}-{max(years)}"

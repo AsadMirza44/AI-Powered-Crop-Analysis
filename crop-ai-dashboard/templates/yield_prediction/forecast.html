@@ -94,7 +94,7 @@
     </div>
     <div class="kpi-strip">
       <div><span>Predicted yield</span><strong>{{ result.predicted_yield_t_ha|floatformat:4 }} t/ha</strong></div>
-      <div><span>Pakistan historical average</span><strong>{{ result.historical_average_t_ha|floatformat:4 }} t/ha</strong></div>
+      <div><span>Pakistan historical average{% if full_history_span %} ({{ full_history_span }}){% endif %}</span><strong>{{ result.historical_average_t_ha|floatformat:4 }} t/ha</strong></div>
       <div><span>Delta</span><strong>{{ result.delta_vs_average_pct|floatformat:4 }}%</strong></div>
     </div>
     <p class="detail-copy">{{ result.summary }}</p>
@@ -102,13 +102,16 @@
       <polyline class="history-line" points="{{ result_chart_points }}" />
     </svg>
     <div class="history-grid">
-      {% for point in result.historical_series|slice:":6" %}
+      {% for point in recent_history %}
         <div>
           <span>{{ point.year }}</span>
           <strong>{{ point.yield_t_ha|floatformat:4 }} t/ha</strong>
         </div>
       {% endfor %}
     </div>
+    {% if recent_history_span %}
+      <p class="muted">Latest official yield history shown: {{ recent_history_span }}</p>
+    {% endif %}
   </article>
 
   <article class="panel">

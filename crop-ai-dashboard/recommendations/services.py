@@ -131,9 +131,25 @@ def build_disease_recommendations(crop: str, label: str, confidence: float, hots
             "Limit leaf wetness duration and avoid overhead irrigation where possible.",
             "Disinfect tools between blocks if plant handling is required.",
         ],
+        "bacterial blight": [
+            "Avoid moving through wet foliage and reduce splash-heavy irrigation until the spread pattern is confirmed.",
+            "Inspect neighboring plants for angular or water-soaked lesions before deciding on treatment intensity.",
+        ],
         "leaf mold": [
             "Improve ventilation around the canopy and avoid trapping humidity around foliage.",
             "Check greenhouse or tunnel airflow if the crop is under protected cultivation.",
+        ],
+        "alternaria leaf spot": [
+            "Increase scouting on older leaves and remove heavily affected foliage where practical.",
+            "Reduce prolonged leaf wetness and review field sanitation before adding extra chemical cost.",
+        ],
+        "fusarium wilt": [
+            "Check the spread pattern along rows and inspect stems or vascular tissue before making replant decisions.",
+            "Avoid over-irrigating stressed sections and isolate badly affected plants where feasible.",
+        ],
+        "verticillium wilt": [
+            "Track patchy wilting zones and compare symptom spread with irrigation uniformity before intervention.",
+            "Keep soil moisture stable and avoid adding unnecessary nitrogen to already stressed plants.",
         ],
         "septoria leaf spot": [
             "Increase scouting frequency around older leaves and humid field edges.",
@@ -142,6 +158,26 @@ def build_disease_recommendations(crop: str, label: str, confidence: float, hots
         "tomato yellow leaf curl virus": [
             "Inspect the block for whitefly pressure and remove severely affected plants from active production zones.",
             "Use this result as a scouting trigger for vector management rather than a standalone treatment instruction.",
+        ],
+        "brown rust": [
+            "Increase scouting frequency across the mid-canopy and confirm whether fresh pustules are spreading after humid nights.",
+            "Protect airflow where possible and avoid turning a localized case into a field-wide reaction without checking spread.",
+        ],
+        "pokkah boeng": [
+            "Inspect the newest leaves and spindle tissue for deformation before deciding on broad control measures.",
+            "Review drainage and canopy humidity because prolonged moisture can worsen symptom progression.",
+        ],
+        "smut": [
+            "Flag affected stools quickly and inspect neighboring plants because smut can escalate through infected planting material.",
+            "Use the result as a trigger to review seed cane hygiene and block-level sanitation practices.",
+        ],
+        "viral disease": [
+            "Check the field for vector pressure and remove clearly affected leaves or stools from close observation blocks.",
+            "Treat this as an early warning for spread management rather than a standalone chemical recommendation.",
+        ],
+        "yellow leaf": [
+            "Inspect symptom spread along the row and check whether nutrient stress is amplifying the yellowing signal.",
+            "Use follow-up scouting to separate persistent leaf disease from temporary nutrient or moisture imbalance.",
         ],
     }
     base = base_lookup.get(

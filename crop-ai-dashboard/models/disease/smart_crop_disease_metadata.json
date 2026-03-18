@@ -1,11 +1,22 @@
 {
   "class_names": [
+    "cotton_healthy",
+    "cotton_alternaria_leaf_spot",
+    "cotton_bacterial_blight",
+    "cotton_fusarium_wilt",
+    "cotton_verticillium_wilt",
     "maize_healthy",
     "maize_common_rust",
     "maize_northern_leaf_blight",
     "potato_healthy",
     "potato_early_blight",
     "potato_late_blight",
+    "sugarcane_healthy",
+    "sugarcane_brown_rust",
+    "sugarcane_pokkah_boeng",
+    "sugarcane_smut",
+    "sugarcane_viral_disease",
+    "sugarcane_yellow_leaf",
     "tomato_healthy",
     "tomato_bacterial_spot",
     "tomato_early_blight",
@@ -15,6 +26,26 @@
     "tomato_tomato_yellow_leaf_curl_virus"
   ],
   "class_details": {
+    "cotton_healthy": {
+      "crop": "cotton",
+      "display_name": "Healthy"
+    },
+    "cotton_alternaria_leaf_spot": {
+      "crop": "cotton",
+      "display_name": "Alternaria Leaf Spot"
+    },
+    "cotton_bacterial_blight": {
+      "crop": "cotton",
+      "display_name": "Bacterial Blight"
+    },
+    "cotton_fusarium_wilt": {
+      "crop": "cotton",
+      "display_name": "Fusarium Wilt"
+    },
+    "cotton_verticillium_wilt": {
+      "crop": "cotton",
+      "display_name": "Verticillium Wilt"
+    },
     "maize_healthy": {
       "crop": "maize",
       "display_name": "Healthy"
@@ -38,6 +69,30 @@
     "potato_late_blight": {
       "crop": "potato",
       "display_name": "Late Blight"
+    },
+    "sugarcane_healthy": {
+      "crop": "sugarcane",
+      "display_name": "Healthy"
+    },
+    "sugarcane_brown_rust": {
+      "crop": "sugarcane",
+      "display_name": "Brown Rust"
+    },
+    "sugarcane_pokkah_boeng": {
+      "crop": "sugarcane",
+      "display_name": "Pokkah Boeng"
+    },
+    "sugarcane_smut": {
+      "crop": "sugarcane",
+      "display_name": "Smut"
+    },
+    "sugarcane_viral_disease": {
+      "crop": "sugarcane",
+      "display_name": "Viral Disease"
+    },
+    "sugarcane_yellow_leaf": {
+      "crop": "sugarcane",
+      "display_name": "Yellow Leaf"
     },
     "tomato_healthy": {
       "crop": "tomato",
@@ -74,16 +129,30 @@
   ],
   "last_conv_layer": "gradcam_conv",
   "model_family": "MobileNetV2",
-  "train_accuracy": 0.7976,
-  "val_accuracy": 0.749,
-  "finetune_val_accuracy": 0.7922,
-  "test_accuracy": 0.8451,
-  "test_loss": 0.5494,
-  "manifest_rows": 3397,
+  "train_accuracy": 0.7729,
+  "val_accuracy": 0.7919,
+  "finetune_val_accuracy": 0.8104,
+  "test_accuracy": 0.806,
+  "test_loss": 0.5476,
+  "manifest_rows": 5768,
   "class_counts": {
+    "cotton_healthy": {
+      "mendeley_cotton": 220
+    },
+    "cotton_alternaria_leaf_spot": {
+      "mendeley_cotton": 173
+    },
+    "cotton_bacterial_blight": {
+      "mendeley_cotton": 218
+    },
+    "cotton_fusarium_wilt": {
+      "mendeley_cotton": 220
+    },
+    "cotton_verticillium_wilt": {
+      "mendeley_cotton": 220
+    },
     "maize_healthy": {
-      "plant_village": 220,
-      "plantdoc": 0
+      "plant_village": 220
     },
     "maize_common_rust": {
       "plant_village": 220,
@@ -94,8 +163,7 @@
       "plantdoc": 55
     },
     "potato_healthy": {
-      "plant_village": 152,
-      "plantdoc": 0
+      "plant_village": 152
     },
     "potato_early_blight": {
       "plant_village": 220,
@@ -104,6 +172,24 @@
     "potato_late_blight": {
       "plant_village": 220,
       "plantdoc": 55
+    },
+    "sugarcane_healthy": {
+      "mendeley_sugarcane": 220
+    },
+    "sugarcane_brown_rust": {
+      "mendeley_sugarcane": 220
+    },
+    "sugarcane_pokkah_boeng": {
+      "mendeley_sugarcane": 220
+    },
+    "sugarcane_smut": {
+      "mendeley_sugarcane": 220
+    },
+    "sugarcane_viral_disease": {
+      "mendeley_sugarcane": 220
+    },
+    "sugarcane_yellow_leaf": {
+      "mendeley_sugarcane": 220
     },
     "tomato_healthy": {
       "plant_village": 220,
@@ -134,5 +220,5 @@
       "plantdoc": 55
     }
   },
-  "notes": "Real-data TensorFlow disease baseline built from PlantVillage and PlantDoc. MobileNetV2 is used for transfer learning, OpenCV handles preprocessing, and crop-aware filtering is applied at inference time."
+  "notes": "Real-data TensorFlow disease baseline built from PlantVillage, PlantDoc, and crop-specific Mendeley disease datasets for cotton and sugarcane. MobileNetV2 is used for transfer learning, OpenCV handles preprocessing, and crop-aware filtering is applied at inference time."
 }

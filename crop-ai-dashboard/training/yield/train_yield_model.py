@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import calendar
 import io
 import json
@@ -34,8 +35,10 @@ PBS_URL = "https://www.pbs.gov.pk/wp-content/uploads/2020/07/Annual-National-Acc
 NASA_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
 
 CROP_ITEM_MAP = {
+    "cotton": "Seed cotton, unginned",
     "maize": "Maize (corn)",
     "rice": "Rice",
+    "sugarcane": "Sugar cane",
     "wheat": "Wheat",
 }
 
@@ -54,8 +57,8 @@ def ensure_directories() -> None:
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def download_if_missing(url: str, target: Path) -> Path:
-    if target.exists():
+def download_if_missing(url: str, target: Path, force_refresh: bool = False) -> Path:
+    if target.exists() and not force_refresh:
         return target
     response = requests.get(url, timeout=180)
     response.raise_for_status()
@@ -63,8 +66,8 @@ def download_if_missing(url: str, target: Path) -> Path:
     return target
 
 
-def parse_faostat_crop_panel() -> pd.DataFrame:
-    archive_path = download_if_missing(FAOSTAT_URL, RAW_DIR / "faostat_production_crops.zip")
+def parse_faostat_crop_panel(force_refresh: bool = False) -> pd.DataFrame:
+    archive_path = download_if_missing(FAOSTAT_URL, RAW_DIR / "faostat_production_crops.zip", force_refresh=force_refresh)
     with zipfile.ZipFile(archive_path) as archive:
         with archive.open("Production_Crops_Livestock_E_All_Data_(Normalized).csv") as handle:
             filtered_chunks: list[pd.DataFrame] = []
@@ -107,8 +110,8 @@ def _parse_pbs_year(column_name: str) -> int | None:
     return 2000 + int(tail)
 
 
-def parse_pbs_macro_features() -> pd.DataFrame:
-    workbook_path = download_if_missing(PBS_URL, RAW_DIR / "pbs_annual_national_accounts.xlsx")
+def parse_pbs_macro_features(force_refresh: bool = False) -> pd.DataFrame:
+    workbook_path = download_if_missing(PBS_URL, RAW_DIR / "pbs_annual_national_accounts.xlsx", force_refresh=force_refresh)
     frame = pd.read_excel(workbook_path, sheet_name="Table 5", header=None)
     header = [str(value).strip() for value in frame.iloc[2].tolist()]
     data = frame.iloc[4:12].copy()
@@ -238,9 +241,9 @@ def build_soil_features(crop: str) -> dict[str, float]:
     return {feature_name: round(float(np.mean(values)), 3) for feature_name, values in soil_values.items()}
 
 
-def build_training_dataset() -> pd.DataFrame:
-    faostat_df = parse_faostat_crop_panel()
-    pbs_df = parse_pbs_macro_features()
+def build_training_dataset(force_refresh_sources: bool = False) -> pd.DataFrame:
+    faostat_df = parse_faostat_crop_panel(force_refresh=force_refresh_sources)
+    pbs_df = parse_pbs_macro_features(force_refresh=force_refresh_sources)
     weather_records: list[dict] = []
     soil_records = {crop: build_soil_features(crop) for crop in CROP_ITEM_MAP}
 
@@ -259,9 +262,9 @@ def build_training_dataset() -> pd.DataFrame:
     return dataset
 
 
-def train() -> None:
+def train(force_refresh_sources: bool = False) -> None:
     ensure_directories()
-    dataset = build_training_dataset()
+    dataset = build_training_dataset(force_refresh_sources=force_refresh_sources)
 
     feature_columns = [
         "crop",
@@ -369,4 +372,11 @@ def train() -> None:
 
 
 if __name__ == "__main__":
-    train()
+    parser = argparse.ArgumentParser(description="Train the scikit-learn yield model with refreshed official sources.")
+    parser.add_argument(
+        "--refresh-sources",
+        action="store_true",
+        help="Force re-download of FAOSTAT and PBS source files before rebuilding the dataset.",
+    )
+    args = parser.parse_args()
+    train(force_refresh_sources=args.refresh_sources)
