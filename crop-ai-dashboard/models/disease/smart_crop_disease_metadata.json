@@ -1,0 +1,138 @@
+{
+  "class_names": [
+    "maize_healthy",
+    "maize_common_rust",
+    "maize_northern_leaf_blight",
+    "potato_healthy",
+    "potato_early_blight",
+    "potato_late_blight",
+    "tomato_healthy",
+    "tomato_bacterial_spot",
+    "tomato_early_blight",
+    "tomato_late_blight",
+    "tomato_leaf_mold",
+    "tomato_septoria_leaf_spot",
+    "tomato_tomato_yellow_leaf_curl_virus"
+  ],
+  "class_details": {
+    "maize_healthy": {
+      "crop": "maize",
+      "display_name": "Healthy"
+    },
+    "maize_common_rust": {
+      "crop": "maize",
+      "display_name": "Common Rust"
+    },
+    "maize_northern_leaf_blight": {
+      "crop": "maize",
+      "display_name": "Northern Leaf Blight"
+    },
+    "potato_healthy": {
+      "crop": "potato",
+      "display_name": "Healthy"
+    },
+    "potato_early_blight": {
+      "crop": "potato",
+      "display_name": "Early Blight"
+    },
+    "potato_late_blight": {
+      "crop": "potato",
+      "display_name": "Late Blight"
+    },
+    "tomato_healthy": {
+      "crop": "tomato",
+      "display_name": "Healthy"
+    },
+    "tomato_bacterial_spot": {
+      "crop": "tomato",
+      "display_name": "Bacterial Spot"
+    },
+    "tomato_early_blight": {
+      "crop": "tomato",
+      "display_name": "Early Blight"
+    },
+    "tomato_late_blight": {
+      "crop": "tomato",
+      "display_name": "Late Blight"
+    },
+    "tomato_leaf_mold": {
+      "crop": "tomato",
+      "display_name": "Leaf Mold"
+    },
+    "tomato_septoria_leaf_spot": {
+      "crop": "tomato",
+      "display_name": "Septoria Leaf Spot"
+    },
+    "tomato_tomato_yellow_leaf_curl_virus": {
+      "crop": "tomato",
+      "display_name": "Tomato Yellow Leaf Curl Virus"
+    }
+  },
+  "image_size": [
+    160,
+    160
+  ],
+  "last_conv_layer": "gradcam_conv",
+  "model_family": "MobileNetV2",
+  "train_accuracy": 0.7976,
+  "val_accuracy": 0.749,
+  "finetune_val_accuracy": 0.7922,
+  "test_accuracy": 0.8451,
+  "test_loss": 0.5494,
+  "manifest_rows": 3397,
+  "class_counts": {
+    "maize_healthy": {
+      "plant_village": 220,
+      "plantdoc": 0
+    },
+    "maize_common_rust": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "maize_northern_leaf_blight": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "potato_healthy": {
+      "plant_village": 152,
+      "plantdoc": 0
+    },
+    "potato_early_blight": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "potato_late_blight": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_healthy": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_bacterial_spot": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_early_blight": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_late_blight": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_leaf_mold": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_septoria_leaf_spot": {
+      "plant_village": 220,
+      "plantdoc": 55
+    },
+    "tomato_tomato_yellow_leaf_curl_virus": {
+      "plant_village": 220,
+      "plantdoc": 55
+    }
+  },
+  "notes": "Real-data TensorFlow disease baseline built from PlantVillage and PlantDoc. MobileNetV2 is used for transfer learning, OpenCV handles preprocessing, and crop-aware filtering is applied at inference time."
+}

@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Smart Crop AI{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'dashboard/styles.css' %}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">Smart Crop AI</p>
+        <h1>Monitoring Console</h1>
+        <p class="muted">Django + TensorFlow + OpenCV + Scikit-learn</p>
+      </div>
+      <nav class="nav-links">
+        <a href="{% url 'dashboard:home' %}">Overview</a>
+        <a href="{% url 'disease:analysis' %}">Disease Lab</a>
+        <a href="{% url 'yield_prediction:forecast' %}">Yield Forecast</a>
+        <a href="{% url 'recommendations:center' %}">Recommendations</a>
+        <a href="{% url 'dashboard:metrics' %}">Metrics</a>
+        <a href="{% url 'dashboard:sources' %}">Sources</a>
+        <a href="{% url 'dashboard:history' %}">History</a>
+      </nav>
+      <div class="sidebar-card">
+        <span class="eyebrow">Coverage</span>
+        <p>{{ nav_crop_count }} crops configured</p>
+        <p>{{ nav_province_count }} provinces represented</p>
+      </div>
+      <div class="sidebar-card">
+        <span class="eyebrow">Disease Crops</span>
+        <p>{{ nav_disease_crops|join:", " }}</p>
+      </div>
+      <div class="sidebar-card">
+        <span class="eyebrow">Yield Crops</span>
+        <p>{{ nav_yield_crops|join:", " }}</p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local deployment</p>
+          <h2>{% block page_title %}Smart Crop AI{% endblock %}</h2>
+        </div>
+        <div class="status-pill">Free-first stack active</div>
+      </header>
+
+      {% if messages %}
+        <section class="messages">
+          {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

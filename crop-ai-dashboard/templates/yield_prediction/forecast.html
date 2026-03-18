@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Yield Forecast | Smart Crop AI{% endblock %}
+{% block page_title %}Yield Forecasting Board{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <p class="eyebrow">Smart controls</p>
+      <h3>District autofill and demo mode</h3>
+    </div>
+    <button type="button" id="apply-smart-defaults" class="secondary-button">Apply district + crop defaults</button>
+  </div>
+  <div class="quick-grid">
+    <div class="record-card">
+      <strong>District smart autofill</strong>
+      <span>Rainfall, temperature, soil pH, and organic carbon</span>
+      <p>Changing district fills the local climate and soil baseline. Crop choice fills season and nutrient targets.</p>
+    </div>
+    {% for scenario in yield_demo_scenarios %}
+      <div class="demo-card">
+        <div>
+          <strong>{{ scenario.title }}</strong>
+          <span>Demo scenario</span>
+        </div>
+        <p>{{ scenario.description }}</p>
+        <button
+          type="button"
+          class="secondary-button"
+          data-yield-scenario="{{ scenario.key }}"
+        >
+          Load sample
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Season input</p>
+        <h3>Forecast form</h3>
+      </div>
+      <div class="status-pill">Manual edits override autofill</div>
+    </div>
+    <form method="post" class="form-grid">
+      {% csrf_token %}
+      {% for field in form %}
+        <label>
+          <span>{{ field.label }}</span>
+          {{ field }}
+        </label>
+      {% endfor %}
+      <button type="submit" class="primary-button span-two">Generate yield forecast</button>
+    </form>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Recent forecasts</p>
+        <h3>Stored outlooks</h3>
+      </div>
+    </div>
+    <div class="record-list">
+      {% for item in recent_predictions %}
+        <div class="record-card severity-{{ item.alert_severity }}">
+          <div class="record-head">
+            <strong>{{ item.crop|title }} · {{ item.district }}</strong>
+            <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+          </div>
+          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No yield forecasts yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+{% if result %}
+<section class="grid-two">
+  <article class="panel severity-{{ result.alert_severity }}">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Forecast result</p>
+        <h3>{{ result.crop|title }} · {{ result.district }}</h3>
+      </div>
+      <div class="status-pill severity-{{ result.alert_severity }}">{{ result.alert_label }}</div>
+    </div>
+    <div class="kpi-strip">
+      <div><span>Predicted yield</span><strong>{{ result.predicted_yield_t_ha|floatformat:2 }} t/ha</strong></div>
+      <div><span>Pakistan historical average</span><strong>{{ result.historical_average_t_ha|floatformat:2 }} t/ha</strong></div>
+      <div><span>Delta</span><strong>{{ result.delta_vs_average_pct|floatformat:1 }}%</strong></div>
+    </div>
+    <p class="detail-copy">{{ result.summary }}</p>
+    <svg class="history-chart" viewBox="0 0 360 140" preserveAspectRatio="none">
+      <polyline class="history-line" points="{{ result_chart_points }}" />
+    </svg>
+    <div class="history-grid">
+      {% for point in result.historical_series|slice:":6" %}
+        <div>
+          <span>{{ point.year }}</span>
+          <strong>{{ point.yield_t_ha }} t/ha</strong>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Agronomy actions</p>
+        <h3>Top factors and recommendations</h3>
+      </div>
+    </div>
+    <div class="stack-list">
+      {% for factor in result.top_factors %}
+        <div class="record-card">
+          <strong>{{ factor.label }}</strong>
+          <span>{{ factor.impact }}</span>
+          <p>{{ factor.summary }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="record-list">
+      {% for item in result.recommendations %}
+        <div class="record-card severity-{{ item.priority }}">
+          <div class="record-head">
+            <strong>{{ item.category|title }} · {{ item.priority|title }}</strong>
+            <span class="severity-pill severity-{{ item.priority }}">{{ item.priority|title }}</span>
+          </div>
+          <span>{{ item.title }}</span>
+          <p>{{ item.action }}</p>
+          <p class="muted">{{ item.rationale }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+  {{ district_autofill|json_script:"district-autofill" }}
+  {{ crop_defaults|json_script:"crop-defaults" }}
+  {{ yield_demo_scenarios|json_script:"yield-demo-scenarios" }}
+  <script>
+    const districtAutofill = JSON.parse(document.getElementById("district-autofill").textContent);
+    const cropDefaults = JSON.parse(document.getElementById("crop-defaults").textContent);
+    const yieldScenarios = Object.fromEntries(
+      JSON.parse(document.getElementById("yield-demo-scenarios").textContent).map((item) => [item.key, item.payload])
+    );
+
+    const fieldMap = {
+      crop: document.getElementById("id_crop"),
+      district: document.getElementById("id_district"),
+      season: document.getElementById("id_season"),
+      rainfall_mm: document.getElementById("id_rainfall_mm"),
+      avg_temp_c: document.getElementById("id_avg_temp_c"),
+      soil_ph: document.getElementById("id_soil_ph"),
+      organic_carbon_pct: document.getElementById("id_organic_carbon_pct"),
+      nitrogen_ppm: document.getElementById("id_nitrogen_ppm"),
+      phosphorus_ppm: document.getElementById("id_phosphorus_ppm"),
+      potassium_ppm: document.getElementById("id_potassium_ppm"),
+      cultivated_area_hectares: document.getElementById("id_cultivated_area_hectares")
+    };
+
+    function setField(name, value) {
+      const field = fieldMap[name];
+      if (field && value !== undefined && value !== null && value !== "") {
+        field.value = value;
+      }
+    }
+
+    function applyDistrictDefaults() {
+      const profile = districtAutofill[fieldMap.district?.value];
+      if (!profile) {
+        return;
+      }
+      Object.entries(profile).forEach(([key, value]) => setField(key, value));
+    }
+
+    function applyCropDefaults() {
+      const profile = cropDefaults[fieldMap.crop?.value];
+      if (!profile) {
+        return;
+      }
+      Object.entries(profile).forEach(([key, value]) => setField(key, value));
+    }
+
+    document.getElementById("apply-smart-defaults")?.addEventListener("click", () => {
+      applyDistrictDefaults();
+      applyCropDefaults();
+    });
+
+    fieldMap.district?.addEventListener("change", applyDistrictDefaults);
+    fieldMap.crop?.addEventListener("change", applyCropDefaults);
+
+    document.querySelectorAll("[data-yield-scenario]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const payload = yieldScenarios[button.dataset.yieldScenario];
+        Object.entries(payload).forEach(([key, value]) => setField(key, value));
+      });
+    });
+  </script>
+{% endblock %}

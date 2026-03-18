@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Disease Lab | Smart Crop AI{% endblock %}
+{% block page_title %}Disease Analysis Station{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <p class="eyebrow">Demo mode</p>
+      <h3>Quick-run sample cases</h3>
+    </div>
+    <div class="status-pill">Upload or launch a built-in sample</div>
+  </div>
+  <div class="quick-grid">
+    {% for sample in demo_samples %}
+      <article class="demo-card">
+        <img src="{% static sample.static_path %}" alt="{{ sample.title }}">
+        <div>
+          <strong>{{ sample.title }}</strong>
+          <span>{{ sample.crop|title }}</span>
+        </div>
+        <p>{{ sample.description }}</p>
+        <button
+          type="button"
+          class="secondary-button"
+          data-demo-sample="{{ sample.key }}"
+          data-demo-crop="{{ sample.crop }}"
+        >
+          Run sample
+        </button>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Image intake</p>
+        <h3>Upload crop leaf imagery</h3>
+      </div>
+      <div class="status-pill">Upload overrides demo mode</div>
+    </div>
+    <form method="post" enctype="multipart/form-data" class="form-grid" id="disease-analysis-form">
+      {% csrf_token %}
+      {{ form.demo_sample }}
+      <label>
+        <span>Crop</span>
+        {{ form.crop }}
+      </label>
+      <label class="span-two">
+        <span>Leaf image</span>
+        {{ form.image }}
+      </label>
+      <button type="submit" class="primary-button span-two">Run disease analysis</button>
+    </form>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Recent runs</p>
+        <h3>Latest diagnoses</h3>
+      </div>
+    </div>
+    <div class="record-list">
+      {% for item in recent_predictions %}
+        <div class="record-card severity-{{ item.alert_severity }}">
+          <div class="record-head">
+            <strong>{{ item.crop|title }} · {{ item.predicted_label }}</strong>
+            <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+          </div>
+          <span>{{ item.confidence|floatformat:2 }} confidence</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No disease predictions yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+{% if result %}
+<section class="grid-two">
+  <article class="panel severity-{{ result.alert_severity }}">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Analysis result</p>
+        <h3>{{ result.predicted_label }}</h3>
+      </div>
+      <div class="status-pill severity-{{ result.alert_severity }}">{{ result.alert_label }}</div>
+    </div>
+    <div class="image-grid">
+      <figure>
+        <img src="{{ result.image.url }}" alt="Uploaded leaf">
+        <figcaption>Uploaded leaf</figcaption>
+      </figure>
+      <figure>
+        <img src="{{ result.overlay_image.url }}" alt="Stress overlay">
+        <figcaption>OpenCV + Grad-CAM overlay</figcaption>
+      </figure>
+    </div>
+    <div class="kpi-strip">
+      <div><span>Leaf coverage</span><strong>{{ result.plant_coverage_pct|floatformat:1 }}%</strong></div>
+      <div><span>Hotspot area</span><strong>{{ result.hotspot_pct|floatformat:1 }}%</strong></div>
+    </div>
+    <p class="detail-copy">{{ result.summary }}</p>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Probabilities and actions</p>
+        <h3>Diagnostic guidance</h3>
+      </div>
+    </div>
+    <div class="stack-list">
+      {% for item in result.probabilities %}
+        <div class="stack-row">
+          <div>
+            <strong>{{ item.label }}</strong>
+            <span>{{ item.probability|floatformat:2 }}</span>
+          </div>
+          <div class="mini-bar"><span style="width: {{ item.probability|floatformat:0 }}%"></span></div>
+        </div>
+      {% endfor %}
+    </div>
+    <ul class="guidance-list">
+      {% for note in result.recommendations %}
+        <li>{{ note }}</li>
+      {% endfor %}
+    </ul>
+  </article>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+  <script>
+    const demoField = document.getElementById("id_demo_sample");
+    const cropField = document.getElementById("id_crop");
+    const imageField = document.getElementById("id_image");
+    const analysisForm = document.getElementById("disease-analysis-form");
+
+    document.querySelectorAll("[data-demo-sample]").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (demoField) {
+          demoField.value = button.dataset.demoSample;
+        }
+        if (cropField) {
+          cropField.value = button.dataset.demoCrop;
+        }
+        if (imageField) {
+          imageField.value = "";
+        }
+        analysisForm?.submit();
+      });
+    });
+
+    imageField?.addEventListener("change", () => {
+      if (demoField) {
+        demoField.value = "";
+      }
+    });
+  </script>
+{% endblock %}

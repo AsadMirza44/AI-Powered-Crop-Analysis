@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Recommendations | Smart Crop AI{% endblock %}
+{% block page_title %}Recommendation Center{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+  <div>
+    <p class="eyebrow">Decision layer</p>
+    <h3>Irrigation, fertilizer, and disease guidance are now available as a dedicated monitoring surface.</h3>
+  </div>
+  <div class="hero-metrics">
+    <div class="metric-card">
+      <span>High alerts</span>
+      <strong>{{ alert_counts.high }}</strong>
+    </div>
+    <div class="metric-card">
+      <span>Watch alerts</span>
+      <strong>{{ alert_counts.medium }}</strong>
+    </div>
+    <div class="metric-card">
+      <span>Irrigation notes</span>
+      <strong>{{ category_counts.irrigation|default:0 }}</strong>
+    </div>
+  </div>
+</section>
+
+<section class="grid-two">
+  <article class="panel{% if latest_yield %} severity-{{ latest_yield.alert_severity }}{% endif %}">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Agronomy actions</p>
+        <h3>Latest yield-linked recommendations</h3>
+      </div>
+      <div class="panel-actions">
+        {% if latest_yield %}
+          <span class="severity-pill severity-{{ latest_yield.alert_severity }}">{{ latest_yield.alert_label }}</span>
+        {% endif %}
+        <a class="text-link" href="{% url 'yield_prediction:forecast' %}">Open forecast</a>
+      </div>
+    </div>
+    {% if latest_yield %}
+      <p class="detail-copy">{{ latest_yield.summary }}</p>
+      <div class="record-list">
+        {% for item in agronomy_recommendations %}
+          <div class="record-card severity-{{ item.alert_severity }}">
+            <div class="record-head">
+              <strong>{{ item.category|title }} · {{ item.priority|title }}</strong>
+              <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+            </div>
+            <span>{{ item.title }}</span>
+            <p>{{ item.action }}</p>
+            <p class="muted">{{ item.rationale }}</p>
+          </div>
+        {% empty %}
+          <p class="muted">No agronomic recommendations are stored yet.</p>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="muted">Run a yield forecast to populate the recommendation center.</p>
+    {% endif %}
+  </article>
+
+  <article class="panel{% if latest_disease %} severity-{{ latest_disease.alert_severity }}{% endif %}">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Disease guidance</p>
+        <h3>Latest crop-health advisories</h3>
+      </div>
+      <div class="panel-actions">
+        {% if latest_disease %}
+          <span class="severity-pill severity-{{ latest_disease.alert_severity }}">{{ latest_disease.alert_label }}</span>
+        {% endif %}
+        <a class="text-link" href="{% url 'disease:analysis' %}">Open disease lab</a>
+      </div>
+    </div>
+    {% if latest_disease %}
+      <p class="detail-copy">{{ latest_disease.summary }}</p>
+      <ul class="guidance-list">
+        {% for item in disease_recommendations %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted">Run a disease analysis to populate field-health guidance.</p>
+    {% endif %}
+  </article>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Recent agronomy runs</p>
+        <h3>Yield-linked history</h3>
+      </div>
+    </div>
+    <div class="record-list">
+      {% for item in recent_yield_items %}
+        <div class="record-card severity-{{ item.alert_severity }}">
+          <div class="record-head">
+            <strong>{{ item.crop|title }} · {{ item.district }}</strong>
+            <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+          </div>
+          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No stored yield records yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Recent disease runs</p>
+        <h3>Leaf diagnostics</h3>
+      </div>
+    </div>
+    <div class="record-list">
+      {% for item in recent_disease_items %}
+        <div class="record-card severity-{{ item.alert_severity }}">
+          <div class="record-head">
+            <strong>{{ item.crop|title }} · {{ item.predicted_label }}</strong>
+            <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+          </div>
+          <span>{{ item.confidence|floatformat:2 }} confidence</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No stored disease records yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

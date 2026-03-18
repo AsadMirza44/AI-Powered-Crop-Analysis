@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}History | Smart Crop AI{% endblock %}
+{% block page_title %}Prediction History{% endblock %}
+
+{% block content %}
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Stored disease cases</p>
+        <h3>Latest diagnostics</h3>
+      </div>
+    </div>
+    <div class="record-list">
+      {% for item in disease_items %}
+        <div class="record-card">
+          <strong>{{ item.crop|title }} · {{ item.predicted_label }}</strong>
+          <span>{{ item.created_at|date:"Y-m-d H:i" }}</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No disease records yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Stored yield cases</p>
+        <h3>Latest forecasts</h3>
+      </div>
+    </div>
+    <svg class="history-chart" viewBox="0 0 360 140" preserveAspectRatio="none">
+      <polyline class="history-line" points="{{ yield_chart_points }}" />
+    </svg>
+    <div class="record-list">
+      {% for item in yield_items %}
+        <div class="record-card">
+          <strong>{{ item.crop|title }} · {{ item.district }}</strong>
+          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No yield records yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+{% endblock %}

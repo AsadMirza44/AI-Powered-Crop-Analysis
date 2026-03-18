@@ -1,0 +1,12 @@
+Django>=5.2,<6.0
+tensorflow-cpu>=2.20,<2.21
+opencv-python-headless>=4.13,<5.0
+PyMySQL>=1.1,<2.0
+python-dotenv>=1.1,<2.0
+numpy>=2.4,<3.0
+pandas>=2.3,<3.0
+Pillow>=11.0,<12.0
+scikit-learn>=1.8,<2.0
+joblib>=1.5,<2.0
+gunicorn>=23.0,<24.0
+whitenoise>=6.9,<7.0

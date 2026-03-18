@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Overview | Smart Crop AI{% endblock %}
+{% block page_title %}Operational Overview{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+  <div>
+    <p class="eyebrow">Active monitoring</p>
+    <h3>Crop diagnostics, yield forecasting, and agronomy actions in one local dashboard.</h3>
+  </div>
+  <div class="hero-metrics">
+    <div class="metric-card">
+      <span>Total predictions</span>
+      <strong>{{ total_predictions }}</strong>
+    </div>
+    <div class="metric-card">
+      <span>Average confidence</span>
+      <strong>{{ avg_confidence_pct }}%</strong>
+    </div>
+    <div class="metric-card">
+      <span>Average yield</span>
+      <strong>{{ avg_yield_t_ha }} t/ha</strong>
+    </div>
+  </div>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Alert overview</p>
+        <h3>Current monitoring severity</h3>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <div class="metric-card severity-high">
+        <span>High alerts</span>
+        <strong>{{ alert_counts.high }}</strong>
+      </div>
+      <div class="metric-card severity-medium">
+        <span>Watch alerts</span>
+        <strong>{{ alert_counts.medium }}</strong>
+      </div>
+      <div class="metric-card severity-low">
+        <span>Stable cases</span>
+        <strong>{{ alert_counts.low }}</strong>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Evidence access</p>
+        <h3>Model and data pages</h3>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <a class="record-card link-card" href="{% url 'dashboard:metrics' %}">
+        <strong>Model metrics</strong>
+        <span>Accuracy, RMSE, MAE, R², dataset counts</span>
+        <p>Open the evidence page for the TensorFlow and scikit-learn artifacts used in the project.</p>
+      </a>
+      <a class="record-card link-card" href="{% url 'dashboard:sources' %}">
+        <strong>Sources and limitations</strong>
+        <span>Free datasets and current project bounds</span>
+        <p>Review the free-first data stack and the limitations that still matter during evaluation.</p>
+      </a>
+    </div>
+  </article>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Yield spotlight</p>
+        <h3>{{ spotlight_crop_label }} in {{ spotlight_district }}</h3>
+      </div>
+    </div>
+    <svg class="history-chart" viewBox="0 0 360 140" preserveAspectRatio="none">
+      <polyline class="history-line" points="{{ yield_chart_points }}" />
+    </svg>
+    <div class="history-grid">
+      {% for point in yield_history|slice:":6" %}
+        <div>
+          <span>{{ point.year }}</span>
+          <strong>{{ point.yield_t_ha }} t/ha</strong>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Regional spread</p>
+        <h3>Province readiness</h3>
+      </div>
+    </div>
+    <div class="stack-list">
+      {% for item in province_summaries %}
+        <div class="stack-row">
+          <div>
+            <strong>{{ item.province }}</strong>
+            <span>{{ item.districts }} districts configured</span>
+          </div>
+          <div class="mini-bar"><span style="width: {% widthratio item.districts 4 100 %}%"></span></div>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Recent disease activity</p>
+        <h3>Latest image diagnostics</h3>
+      </div>
+      <a class="text-link" href="{% url 'disease:analysis' %}">Open lab</a>
+    </div>
+    <div class="record-list">
+      {% for item in recent_disease_predictions %}
+        <div class="record-card severity-{{ item.alert_severity }}">
+          <div class="record-head">
+            <strong>{{ item.crop|title }} · {{ item.predicted_label }}</strong>
+            <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+          </div>
+          <span>{{ item.confidence|floatformat:2 }} confidence</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No disease analyses stored yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Recent yield activity</p>
+        <h3>Latest forecast runs</h3>
+      </div>
+      <a class="text-link" href="{% url 'yield_prediction:forecast' %}">Open forecast</a>
+    </div>
+    <div class="record-list">
+      {% for item in recent_yield_predictions %}
+        <div class="record-card severity-{{ item.alert_severity }}">
+          <div class="record-head">
+            <strong>{{ item.crop|title }} · {{ item.district }}</strong>
+            <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
+          </div>
+          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <p>{{ item.summary }}</p>
+        </div>
+      {% empty %}
+        <p class="muted">No yield forecasts stored yet.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <p class="eyebrow">Operations board</p>
+      <h3>Implementation notes</h3>
+    </div>
+  </div>
+  <div class="operations-grid">
+    {% for note in operations_notes %}
+      <div class="operation-tile">{{ note }}</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.env
+media/
+staticfiles/
+db.sqlite3
+data/raw/
+data/tfds/
+data/interim/
+
+*.log

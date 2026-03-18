@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Metrics | Smart Crop AI{% endblock %}
+{% block page_title %}Model Metrics Board{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+  <div>
+    <p class="eyebrow">Evidence page</p>
+    <h3>Active model performance, dataset scale, and runtime coverage.</h3>
+  </div>
+  <div class="hero-metrics">
+    <div class="metric-card">
+      <span>Disease test accuracy</span>
+      <strong>{{ disease_model.test_accuracy_pct }}%</strong>
+    </div>
+    <div class="metric-card">
+      <span>Yield best model</span>
+      <strong>{{ yield_model.family }}</strong>
+    </div>
+    <div class="metric-card">
+      <span>Runtime districts</span>
+      <strong>{{ runtime_metrics.district_count }}</strong>
+    </div>
+  </div>
+</section>
+
+<section class="grid-two">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Disease model</p>
+        <h3>{{ disease_model.family }}</h3>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <div class="metric-card">
+        <span>Validation accuracy</span>
+        <strong>{{ disease_model.validation_accuracy_pct }}%</strong>
+      </div>
+      <div class="metric-card">
+        <span>Test accuracy</span>
+        <strong>{{ disease_model.test_accuracy_pct }}%</strong>
+      </div>
+      <div class="metric-card">
+        <span>Images used</span>
+        <strong>{{ disease_model.image_count }}</strong>
+      </div>
+      <div class="metric-card">
+        <span>Classes covered</span>
+        <strong>{{ disease_model.class_count }}</strong>
+      </div>
+    </div>
+    <p class="detail-copy">{{ disease_model.notes }}</p>
+    <div class="record-list">
+      {% for item in disease_model.source_totals %}
+        <div class="record-card">
+          <strong>{{ item.label }}</strong>
+          <span>{{ item.count }} images</span>
+        </div>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">Yield model</p>
+        <h3>{{ yield_model.family }}</h3>
+      </div>
+    </div>
+    <div class="quick-grid">
+      <div class="metric-card">
+        <span>Feature count</span>
+        <strong>{{ yield_model.feature_count }}</strong>
+      </div>
+      <div class="metric-card">
+        <span>History span</span>
+        <strong>{{ yield_model.year_span }}</strong>
+      </div>
+      <div class="metric-card">
+        <span>Baseline context</span>
+        <strong>{{ yield_model.history_context }}</strong>
+      </div>
+    </div>
+    <p class="detail-copy">{{ yield_model.notes }}</p>
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>RMSE</th>
+          <th>MAE</th>
+          <th>R²</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in yield_model.candidate_metrics %}
+          <tr>
+            <td>
+              {{ item.label }}
+              {% if item.is_best %}
+                <span class="severity-pill severity-low">Active</span>
+              {% endif %}
+            </td>
+            <td>{{ item.rmse|floatformat:4 }}</td>
+            <td>{{ item.mae|floatformat:4 }}</td>
+            <td>{{ item.r2|floatformat:4 }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </article>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <p class="eyebrow">Runtime coverage</p>
+      <h3>Configured scope in the live dashboard</h3>
+    </div>
+  </div>
+  <div class="quick-grid">
+    <div class="record-card">
+      <strong>Stored disease predictions</strong>
+      <span>{{ runtime_metrics.stored_disease_predictions }}</span>
+    </div>
+    <div class="record-card">
+      <strong>Stored yield predictions</strong>
+      <span>{{ runtime_metrics.stored_yield_predictions }}</span>
+    </div>
+    <div class="record-card">
+      <strong>Disease crops</strong>
+      <span>{{ runtime_metrics.supported_disease_crops|join:", " }}</span>
+    </div>
+    <div class="record-card">
+      <strong>Yield crops</strong>
+      <span>{{ runtime_metrics.supported_yield_crops|join:", " }}</span>
+    </div>
+  </div>
+</section>
+{% endblock %}

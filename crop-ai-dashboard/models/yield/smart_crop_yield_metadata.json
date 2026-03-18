@@ -1,0 +1,433 @@
+{
+  "feature_columns": [
+    "crop",
+    "year",
+    "rainfall_mm",
+    "avg_temp_c",
+    "soil_ph",
+    "organic_carbon_pct",
+    "soil_nitrogen_ppm",
+    "cultivated_area_hectares",
+    "pbs_crops_output_constant_rs_mn",
+    "pbs_important_crops_output_constant_rs_mn"
+  ],
+  "best_model": "random_forest",
+  "candidate_metrics": {
+    "linear_regression": {
+      "rmse": 0.8883,
+      "mae": 0.8178,
+      "r2": 0.5407
+    },
+    "random_forest": {
+      "rmse": 0.6315,
+      "mae": 0.5041,
+      "r2": 0.7679
+    },
+    "hist_gradient_boosting": {
+      "rmse": 0.7953,
+      "mae": 0.5642,
+      "r2": 0.6319
+    }
+  },
+  "historical_series": {
+    "maize": [
+      {
+        "year": 2001,
+        "yield_t_ha": 1.7631
+      },
+      {
+        "year": 2002,
+        "yield_t_ha": 1.8448
+      },
+      {
+        "year": 2003,
+        "yield_t_ha": 2.0034
+      },
+      {
+        "year": 2004,
+        "yield_t_ha": 2.8488
+      },
+      {
+        "year": 2005,
+        "yield_t_ha": 2.9843
+      },
+      {
+        "year": 2006,
+        "yield_t_ha": 3.0368000000000004
+      },
+      {
+        "year": 2007,
+        "yield_t_ha": 3.4265
+      },
+      {
+        "year": 2008,
+        "yield_t_ha": 3.4154
+      },
+      {
+        "year": 2009,
+        "yield_t_ha": 3.4879000000000002
+      },
+      {
+        "year": 2010,
+        "yield_t_ha": 3.8051999999999997
+      },
+      {
+        "year": 2011,
+        "yield_t_ha": 3.9897
+      },
+      {
+        "year": 2012,
+        "yield_t_ha": 3.983
+      },
+      {
+        "year": 2013,
+        "yield_t_ha": 4.2313
+      },
+      {
+        "year": 2014,
+        "yield_t_ha": 4.3211
+      },
+      {
+        "year": 2015,
+        "yield_t_ha": 4.4248
+      },
+      {
+        "year": 2016,
+        "yield_t_ha": 4.5491
+      },
+      {
+        "year": 2017,
+        "yield_t_ha": 4.7181999999999995
+      },
+      {
+        "year": 2018,
+        "yield_t_ha": 4.9685
+      },
+      {
+        "year": 2019,
+        "yield_t_ha": 5.614
+      },
+      {
+        "year": 2020,
+        "yield_t_ha": 6.3054
+      },
+      {
+        "year": 2021,
+        "yield_t_ha": 5.7637
+      },
+      {
+        "year": 2022,
+        "yield_t_ha": 6.3886
+      },
+      {
+        "year": 2023,
+        "yield_t_ha": 5.9335
+      },
+      {
+        "year": 2024,
+        "yield_t_ha": 6.1333
+      }
+    ],
+    "rice": [
+      {
+        "year": 2001,
+        "yield_t_ha": 2.7542
+      },
+      {
+        "year": 2002,
+        "yield_t_ha": 3.0191999999999997
+      },
+      {
+        "year": 2003,
+        "yield_t_ha": 2.9551
+      },
+      {
+        "year": 2004,
+        "yield_t_ha": 2.9914
+      },
+      {
+        "year": 2005,
+        "yield_t_ha": 3.1742
+      },
+      {
+        "year": 2006,
+        "yield_t_ha": 3.1604
+      },
+      {
+        "year": 2007,
+        "yield_t_ha": 3.3176
+      },
+      {
+        "year": 2008,
+        "yield_t_ha": 3.5199000000000003
+      },
+      {
+        "year": 2009,
+        "yield_t_ha": 3.5809
+      },
+      {
+        "year": 2010,
+        "yield_t_ha": 3.0588
+      },
+      {
+        "year": 2011,
+        "yield_t_ha": 3.5939
+      },
+      {
+        "year": 2012,
+        "yield_t_ha": 3.5966
+      },
+      {
+        "year": 2013,
+        "yield_t_ha": 3.7528
+      },
+      {
+        "year": 2014,
+        "yield_t_ha": 3.6339
+      },
+      {
+        "year": 2015,
+        "yield_t_ha": 3.724
+      },
+      {
+        "year": 2016,
+        "yield_t_ha": 3.7716
+      },
+      {
+        "year": 2017,
+        "yield_t_ha": 3.8526
+      },
+      {
+        "year": 2018,
+        "yield_t_ha": 3.8427
+      },
+      {
+        "year": 2019,
+        "yield_t_ha": 3.6653000000000002
+      },
+      {
+        "year": 2020,
+        "yield_t_ha": 3.7863
+      },
+      {
+        "year": 2021,
+        "yield_t_ha": 3.9532
+      },
+      {
+        "year": 2022,
+        "yield_t_ha": 3.6903
+      },
+      {
+        "year": 2023,
+        "yield_t_ha": 4.0662
+      },
+      {
+        "year": 2024,
+        "yield_t_ha": 3.7405999999999997
+      }
+    ],
+    "wheat": [
+      {
+        "year": 2001,
+        "yield_t_ha": 2.3254
+      },
+      {
+        "year": 2002,
+        "yield_t_ha": 2.2620999999999998
+      },
+      {
+        "year": 2003,
+        "yield_t_ha": 2.3878000000000004
+      },
+      {
+        "year": 2004,
+        "yield_t_ha": 2.3733
+      },
+      {
+        "year": 2005,
+        "yield_t_ha": 2.5858000000000003
+      },
+      {
+        "year": 2006,
+        "yield_t_ha": 2.5185999999999997
+      },
+      {
+        "year": 2007,
+        "yield_t_ha": 2.7156
+      },
+      {
+        "year": 2008,
+        "yield_t_ha": 2.4514
+      },
+      {
+        "year": 2009,
+        "yield_t_ha": 2.6568
+      },
+      {
+        "year": 2010,
+        "yield_t_ha": 2.5528000000000004
+      },
+      {
+        "year": 2011,
+        "yield_t_ha": 2.8328
+      },
+      {
+        "year": 2012,
+        "yield_t_ha": 2.7138
+      },
+      {
+        "year": 2013,
+        "yield_t_ha": 2.7956999999999996
+      },
+      {
+        "year": 2014,
+        "yield_t_ha": 2.8241
+      },
+      {
+        "year": 2015,
+        "yield_t_ha": 2.7256
+      },
+      {
+        "year": 2016,
+        "yield_t_ha": 2.779
+      },
+      {
+        "year": 2017,
+        "yield_t_ha": 2.9729
+      },
+      {
+        "year": 2018,
+        "yield_t_ha": 2.8505
+      },
+      {
+        "year": 2019,
+        "yield_t_ha": 2.8059000000000003
+      },
+      {
+        "year": 2020,
+        "yield_t_ha": 2.8675
+      },
+      {
+        "year": 2021,
+        "yield_t_ha": 2.9956
+      },
+      {
+        "year": 2022,
+        "yield_t_ha": 2.9196
+      },
+      {
+        "year": 2023,
+        "yield_t_ha": 3.1176
+      },
+      {
+        "year": 2024,
+        "yield_t_ha": 3.2683
+      }
+    ]
+  },
+  "historical_average": {
+    "maize": 4.164,
+    "rice": 3.508,
+    "wheat": 2.721
+  },
+  "history_context": "Pakistan historical average",
+  "annual_feature_lookup": {
+    "2001": {
+      "pbs_crops_output_constant_rs_mn": 2139845.9979373817,
+      "pbs_important_crops_output_constant_rs_mn": 1044427.5693705917
+    },
+    "2002": {
+      "pbs_crops_output_constant_rs_mn": 2072269.2471381708,
+      "pbs_important_crops_output_constant_rs_mn": 1002894.5798040545
+    },
+    "2003": {
+      "pbs_crops_output_constant_rs_mn": 2101190.86429126,
+      "pbs_important_crops_output_constant_rs_mn": 1058286.2189868125
+    },
+    "2004": {
+      "pbs_crops_output_constant_rs_mn": 2118616.979026612,
+      "pbs_important_crops_output_constant_rs_mn": 1062470.9700887771
+    },
+    "2005": {
+      "pbs_crops_output_constant_rs_mn": 2392432.002799484,
+      "pbs_important_crops_output_constant_rs_mn": 1276891.0290261232
+    },
+    "2006": {
+      "pbs_crops_output_constant_rs_mn": 2384981.548034523,
+      "pbs_important_crops_output_constant_rs_mn": 1236014.0080732196
+    },
+    "2007": {
+      "pbs_crops_output_constant_rs_mn": 2520256.833819057,
+      "pbs_important_crops_output_constant_rs_mn": 1344198.8063652762
+    },
+    "2008": {
+      "pbs_crops_output_constant_rs_mn": 2461864.7401817245,
+      "pbs_important_crops_output_constant_rs_mn": 1278590.182315824
+    },
+    "2009": {
+      "pbs_crops_output_constant_rs_mn": 2559066.2120479313,
+      "pbs_important_crops_output_constant_rs_mn": 1370855.9849782758
+    },
+    "2010": {
+      "pbs_crops_output_constant_rs_mn": 2425068.0276139425,
+      "pbs_important_crops_output_constant_rs_mn": 1307739.4449087894
+    },
+    "2011": {
+      "pbs_crops_output_constant_rs_mn": 2475465.5423885463,
+      "pbs_important_crops_output_constant_rs_mn": 1356855.3302471093
+    },
+    "2012": {
+      "pbs_crops_output_constant_rs_mn": 2506342.8506449466,
+      "pbs_important_crops_output_constant_rs_mn": 1455250.0923848792
+    },
+    "2013": {
+      "pbs_crops_output_constant_rs_mn": 2576183.5371227358,
+      "pbs_important_crops_output_constant_rs_mn": 1476418.6373776672
+    },
+    "2014": {
+      "pbs_crops_output_constant_rs_mn": 2623259.449940896,
+      "pbs_important_crops_output_constant_rs_mn": 1573024.8469426348
+    },
+    "2015": {
+      "pbs_crops_output_constant_rs_mn": 2597394.9824314527,
+      "pbs_important_crops_output_constant_rs_mn": 1542822.283874434
+    },
+    "2016": {
+      "pbs_crops_output_constant_rs_mn": 2497153.0,
+      "pbs_important_crops_output_constant_rs_mn": 1462455.0
+    },
+    "2017": {
+      "pbs_crops_output_constant_rs_mn": 2531438.0,
+      "pbs_important_crops_output_constant_rs_mn": 1501621.0
+    },
+    "2018": {
+      "pbs_crops_output_constant_rs_mn": 2648128.0,
+      "pbs_important_crops_output_constant_rs_mn": 1565723.0
+    },
+    "2019": {
+      "pbs_crops_output_constant_rs_mn": 2532070.0,
+      "pbs_important_crops_output_constant_rs_mn": 1431198.0
+    },
+    "2020": {
+      "pbs_crops_output_constant_rs_mn": 2692121.0,
+      "pbs_important_crops_output_constant_rs_mn": 1506263.0
+    },
+    "2021": {
+      "pbs_crops_output_constant_rs_mn": 2849148.0,
+      "pbs_important_crops_output_constant_rs_mn": 1593985.0
+    },
+    "2022": {
+      "pbs_crops_output_constant_rs_mn": 3083439.0,
+      "pbs_important_crops_output_constant_rs_mn": 1681708.0
+    },
+    "2023": {
+      "pbs_crops_output_constant_rs_mn": 3047425.0,
+      "pbs_important_crops_output_constant_rs_mn": 1689304.0
+    },
+    "2024": {
+      "pbs_crops_output_constant_rs_mn": 3377987.0,
+      "pbs_important_crops_output_constant_rs_mn": 1977942.0
+    }
+  },
+  "notes": "Real-data scikit-learn yield baseline built from FAOSTAT crop statistics, PBS annual crop-output series, NASA POWER seasonal weather aggregates, and SoilGrids soil properties."
+}

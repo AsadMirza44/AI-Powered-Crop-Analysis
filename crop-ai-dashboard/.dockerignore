@@ -1,0 +1,15 @@
+.git
+.venv
+.pytest_cache
+.env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+media
+staticfiles
+notebooks
+training
+data/raw
+*.log
