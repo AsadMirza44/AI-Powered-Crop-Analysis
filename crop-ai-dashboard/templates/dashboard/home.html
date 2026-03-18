@@ -20,7 +20,7 @@
     </div>
     <div class="metric-card">
       <span>Average yield</span>
-      <strong>{{ avg_yield_t_ha }} t/ha</strong>
+      <strong>{{ avg_yield_t_ha|floatformat:4 }} t/ha</strong>
     </div>
   </div>
 </section>
@@ -86,7 +86,7 @@
       {% for point in yield_history|slice:":6" %}
         <div>
           <span>{{ point.year }}</span>
-          <strong>{{ point.yield_t_ha }} t/ha</strong>
+          <strong>{{ point.yield_t_ha|floatformat:4 }} t/ha</strong>
         </div>
       {% endfor %}
     </div>
@@ -153,7 +153,7 @@
             <strong>{{ item.crop|title }} · {{ item.district }}</strong>
             <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
           </div>
-          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <span>{{ item.predicted_yield_t_ha|floatformat:4 }} t/ha</span>
           <p>{{ item.summary }}</p>
         </div>
       {% empty %}

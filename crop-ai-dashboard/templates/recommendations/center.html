@@ -102,7 +102,7 @@
             <strong>{{ item.crop|title }} · {{ item.district }}</strong>
             <span class="severity-pill severity-{{ item.alert_severity }}">{{ item.alert_label }}</span>
           </div>
-          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <span>{{ item.predicted_yield_t_ha|floatformat:4 }} t/ha</span>
           <p>{{ item.summary }}</p>
         </div>
       {% empty %}

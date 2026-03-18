@@ -39,7 +39,7 @@
       {% for item in yield_items %}
         <div class="record-card">
           <strong>{{ item.crop|title }} · {{ item.district }}</strong>
-          <span>{{ item.predicted_yield_t_ha|floatformat:2 }} t/ha</span>
+          <span>{{ item.predicted_yield_t_ha|floatformat:4 }} t/ha</span>
           <p>{{ item.summary }}</p>
         </div>
       {% empty %}
