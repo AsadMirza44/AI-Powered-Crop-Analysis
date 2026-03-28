@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Smart Crop AI Viva Guide</title>
+  <style>
+@page {
+  size: A4;
+  margin: 16mm 14mm 18mm 14mm;
+}
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1f2933;
+  line-height: 1.45;
+  font-size: 11pt;
+  margin: 0;
+}
+main {
+  max-width: 980px;
+  margin: 0 auto;
+}
+h1, h2, h3 {
+  color: #102a43;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+h1 {
+  font-size: 26pt;
+  margin: 0 0 10px;
+  border-bottom: 2px solid #102a43;
+  padding-bottom: 8px;
+}
+h2 {
+  font-size: 17pt;
+  margin-top: 28px;
+  page-break-before: always;
+  border-bottom: 1px solid #bcccdc;
+  padding-bottom: 4px;
+}
+h2:first-of-type {
+  page-break-before: auto;
+}
+h3 {
+  font-size: 12.5pt;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+p, li {
+  margin-top: 0;
+}
+ul, ol {
+  margin-top: 6px;
+  margin-bottom: 10px;
+  padding-left: 22px;
+}
+code {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 9.7pt;
+  background: #f0f4f8;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.hero {
+  background: linear-gradient(135deg, #d9e2ec, #f0f4f8);
+  border: 1px solid #bcccdc;
+  padding: 18px 20px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 10pt;
+}
+.meta div {
+  background: rgba(255,255,255,0.75);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d9e2ec;
+}
+.toc {
+  columns: 2;
+  column-gap: 24px;
+  padding-left: 18px;
+}
+.toc li {
+  break-inside: avoid;
+  margin-bottom: 6px;
+}
+a {
+  color: #0b5cab;
+  text-decoration: none;
+}
+blockquote {
+  border-left: 4px solid #9fb3c8;
+  padding-left: 12px;
+  color: #486581;
+}
+</style>
+</head>
+<body>
+  <main>
+    
+<section class="hero">
+  <p><strong>Smart Crop AI</strong> viva guide built directly from the active Django repository.</p>
+  <div class="meta">
+    <div><strong>Repository</strong><br>C:\Users\AsadMirza\source\repos\Final Project - AI-Powered-Crop-Analysis\AI-Powered-Crop-Analysis\crop-ai-dashboard</div>
+    <div><strong>Verification</strong><br>Django test suite executed successfully on March 28, 2026 with 8 passing tests.</div>
+  </div>
+</section>
+<section>
+  <h2 id="contents">Contents</h2>
+  <ul class="toc"><li><a href="#how-to-use-this-guide">How To Use This Guide</a></li><li><a href="#1-project-foundation">1. Project Foundation</a></li><li><a href="#2-django-structure-and-request-flow">2. Django Structure And Request Flow</a></li><li><a href="#3-disease-detection-module">3. Disease Detection Module</a></li><li><a href="#4-yield-forecasting-module">4. Yield Forecasting Module</a></li><li><a href="#5-recommendation-center-and-monitoring">5. Recommendation Center And Monitoring</a></li><li><a href="#6-data-models-and-training">6. Data, Models, And Training</a></li><li><a href="#6a-model-training-deep-dive">6A. Model Training Deep Dive</a></li><li><a href="#7-testing-demo-support-and-ui-logic">7. Testing, Demo Support, And UI Logic</a></li><li><a href="#8-important-files-the-student-should-know">8. Important Files The Student Should Know</a></li><li><a href="#9-high-value-viva-defense-lines">9. High-Value Viva Defense Lines</a></li><li><a href="#10-things-the-student-must-not-overclaim">10. Things The Student Must Not Overclaim</a></li><li><a href="#11-suggested-live-demo-flow-for-viva">11. Suggested Live Demo Flow For Viva</a></li><li><a href="#12-rapid-fire-viva-questions-and-short-answers">12. Rapid-Fire Viva Questions And Short Answers</a></li><li><a href="#13-final-revision-sheet">13. Final Revision Sheet</a></li><li><a href="#14-best-closing-line-for-viva">14. Best Closing Line For Viva</a></li></ul>
+</section>
+
+    <h1>Smart Crop AI Viva Preparation Guide</h1>
+<p>Repository: <code>C:\Users\AsadMirza\source\repos\Final Project - AI-Powered-Crop-Analysis\AI-Powered-Crop-Analysis\crop-ai-dashboard</code></p>
+<p>Generated on: March 28, 2026</p>
+<p>Verification status:</p>
+<ul><li>The current Django test suite was executed on March 28, 2026.</li><li>Result: 8 tests passed.</li><li>Command used: <code>python manage.py test</code></li></ul>
+<p>Purpose of this guide:</p>
+<ul><li>Help the student prepare for viva questions using the real repository, not a generic AI-agriculture explanation.</li><li>Explain how each module works.</li><li>Point to important files.</li><li>Provide strong question-and-answer style responses for likely examiner questions.</li></ul>
+<h2 id="how-to-use-this-guide">How To Use This Guide</h2>
+<ol><li>Read Sections 1 to 8 carefully.</li><li>Memorize the short defense lines in Sections 9 and 10.</li><li>Practice the demo flow in Section 11.</li><li>Use Section 12 as a rapid-revision sheet one day before viva.</li></ol>
+<h2 id="1-project-foundation">1. Project Foundation</h2>
+<h3 id="q1-what-is-this-project-in-one-clear-sentence">Q1. What is this project in one clear sentence?</h3>
+<p>Answer: This project is a local Django-based smart agriculture dashboard that combines crop disease detection, crop yield forecasting, and agronomic recommendations in one academic web application.</p>
+<p>Key file references:</p>
+<ul><li><code>README.md</code></li><li><code>docs/architecture.md</code></li><li><code>smart_crop_ai/urls.py</code></li></ul>
+<h3 id="q2-what-problem-is-it-trying-to-solve">Q2. What problem is it trying to solve?</h3>
+<p>Answer: The project tries to support farmers or agriculture stakeholders by combining three practical decision-support functions:</p>
+<ul><li>identify likely crop leaf diseases from images,</li><li>forecast crop yield from environmental and soil inputs,</li><li>generate irrigation and fertilizer recommendations from the forecast and crop profile.</li></ul>
+<p>This makes the system more useful than a single-model demo because it covers crop health, expected productivity, and actionable guidance.</p>
+<p>Key file references:</p>
+<ul><li><code>README.md</code></li><li><code>disease/views.py</code></li><li><code>yield_prediction/views.py</code></li><li><code>recommendations/views.py</code></li></ul>
+<h3 id="q3-what-is-the-active-architecture-of-the-repository">Q3. What is the active architecture of the repository?</h3>
+<p>Answer: The active implementation is a Django web application. The browser sends requests to Django, Django renders templates, and the backend calls either TensorFlow or scikit-learn services depending on the feature. The repository also stores prediction history in SQLite and exposes metrics, source, and recommendation pages.</p>
+<p>Important clarification: The older <code>Next.js + FastAPI</code> prototype is not the active implementation in this repository anymore. If an examiner asks, the correct answer is that the current handover repository is Django-only.</p>
+<p>Key file references:</p>
+<ul><li><code>docs/architecture.md</code></li><li><code>smart_crop_ai/settings.py</code></li><li><code>smart_crop_ai/urls.py</code></li></ul>
+<h3 id="q4-why-was-django-a-sensible-choice-for-this-student-project">Q4. Why was Django a sensible choice for this student project?</h3>
+<p>Answer: Django is a practical choice because it already provides:</p>
+<ul><li>URL routing,</li><li>forms and validation,</li><li>template rendering,</li><li>ORM models,</li><li>admin panel,</li><li>testing utilities,</li><li>quick local deployment.</li></ul>
+<p>That means the student can show a complete working system without separately building frontend, authentication, database integration, and admin tooling from scratch.</p>
+<p>Key file references:</p>
+<ul><li><code>smart_crop_ai/settings.py</code></li><li><code>smart_crop_ai/urls.py</code></li><li><code>disease/admin.py</code></li><li><code>yield_prediction/admin.py</code></li></ul>
+<h3 id="q5-what-are-the-main-functional-modules-in-the-codebase">Q5. What are the main functional modules in the codebase?</h3>
+<p>Answer: There are four main Django apps:</p>
+<ul><li><code>dashboard</code>: overview, history, metrics, and sources pages.</li><li><code>disease</code>: leaf image upload, TensorFlow disease inference, Grad-CAM overlay, and disease history storage.</li><li><code>yield_prediction</code>: form-based yield forecasting using a scikit-learn model and rule-linked agronomic outputs.</li><li><code>recommendations</code>: central page that combines the latest disease and yield recommendations.</li></ul>
+<p>Shared logic is placed under <code>smart_crop_ai/</code> for settings, reference data, demo samples, monitoring rules, and URL wiring.</p>
+<p>Key file references:</p>
+<ul><li><code>dashboard/views.py</code></li><li><code>disease/views.py</code></li><li><code>yield_prediction/views.py</code></li><li><code>recommendations/views.py</code></li><li><code>smart_crop_ai/reference_data.py</code></li><li><code>smart_crop_ai/demo_data.py</code></li><li><code>smart_crop_ai/monitoring.py</code></li></ul>
+<h2 id="2-django-structure-and-request-flow">2. Django Structure And Request Flow</h2>
+<h3 id="q6-how-are-requests-routed-through-the-application">Q6. How are requests routed through the application?</h3>
+<p>Answer: The root URL configuration is in <code>smart_crop_ai/urls.py</code>. It maps:</p>
+<ul><li><code>/</code> to the dashboard app,</li><li><code>/disease/</code> to the disease app,</li><li><code>/yield/</code> to the yield prediction app,</li><li><code>/recommendations/</code> to the recommendation center,</li><li><code>/admin/</code> to Django admin.</li></ul>
+<p>This is a clean separation because each feature area has its own <code>urls.py</code> and <code>views.py</code>.</p>
+<p>Key file references:</p>
+<ul><li><code>smart_crop_ai/urls.py</code></li><li><code>dashboard/urls.py</code></li><li><code>disease/urls.py</code></li><li><code>yield_prediction/urls.py</code></li><li><code>recommendations/urls.py</code></li></ul>
+<h3 id="q7-how-is-runtime-configuration-handled">Q7. How is runtime configuration handled?</h3>
+<p>Answer: Runtime configuration is handled in <code>smart_crop_ai/settings.py</code>. Important points are:</p>
+<ul><li><code>.env</code> is loaded using <code>python-dotenv</code>.</li><li><code>DEBUG</code>, <code>SECRET_KEY</code>, and <code>ALLOWED_HOSTS</code> are read from environment variables.</li><li>SQLite is used as the default database.</li><li>static and media directories are configured.</li><li>model artifact paths are explicitly defined for disease and yield models.</li></ul>
+<p>This is good academic engineering because the paths for the shipped models are centralized in one place.</p>
+<p>Key file references:</p>
+<ul><li><code>smart_crop_ai/settings.py</code></li><li><code>.env</code></li></ul>
+<h3 id="q8-how-does-the-dashboard-home-page-work">Q8. How does the dashboard home page work?</h3>
+<p>Answer: The dashboard home page is rendered by <code>dashboard_home()</code> in <code>dashboard/views.py</code>, but most of the logic is actually built in <code>overview_context()</code> inside <code>dashboard/services.py</code>.</p>
+<p>That service:</p>
+<ul><li>fetches recent disease and yield records,</li><li>computes averages and totals,</li><li>builds alert counts,</li><li>loads yield history for a spotlight crop,</li><li>summarizes province coverage,</li><li>prepares chart points for SVG display,</li><li>sends operations notes to the template.</li></ul>
+<p>This is a good separation of concerns because the view stays small and the aggregation logic lives in a service layer.</p>
+<p>Key file references:</p>
+<ul><li><code>dashboard/views.py</code></li><li><code>dashboard/services.py</code></li><li><code>templates/dashboard/home.html</code></li></ul>
+<h3 id="q9-how-does-prediction-history-work">Q9. How does prediction history work?</h3>
+<p>Answer: Prediction history is not stored in text files. It is stored in the database using Django models:</p>
+<ul><li>disease runs are stored in <code>DiseasePrediction</code>,</li><li>yield runs are stored in <code>YieldPrediction</code>.</li></ul>
+<p>The history page queries the latest records, annotates their severity labels, and renders them in the dashboard. For yield records, it also builds a small line chart from the most recent saved forecasts.</p>
+<p>Key file references:</p>
+<ul><li><code>dashboard/views.py</code></li><li><code>disease/models.py</code></li><li><code>yield_prediction/models.py</code></li><li><code>templates/dashboard/history.html</code></li></ul>
+<h3 id="q10-why-is-the-service-layer-important-in-this-project">Q10. Why is the service layer important in this project?</h3>
+<p>Answer: The service layer keeps the code cleaner and easier to defend in viva:</p>
+<ul><li>views handle request and response,</li><li>services handle data preparation, ML inference, aggregation, and rule generation,</li><li>models handle persistence.</li></ul>
+<p>This makes the architecture more maintainable than putting everything directly into Django views.</p>
+<p>Key file references:</p>
+<ul><li><code>dashboard/services.py</code></li><li><code>disease/services.py</code></li><li><code>yield_prediction/services.py</code></li><li><code>recommendations/services.py</code></li></ul>
+<h2 id="3-disease-detection-module">3. Disease Detection Module</h2>
+<h3 id="q11-what-is-the-disease-detection-flow-from-user-input-to-result">Q11. What is the disease detection flow from user input to result?</h3>
+<p>Answer: The disease flow is:</p>
+<ol><li>User opens <code>/disease/</code>.</li><li><code>DiseaseUploadForm</code> asks for crop and image, or accepts a built-in demo sample.</li><li><code>disease_analysis()</code> validates the form.</li><li>If a demo sample is chosen, the file is loaded from <code>smart_crop_ai/demo_data.py</code>.</li><li><code>get_disease_service()</code> returns a cached <code>DiseasePredictionService</code>.</li><li><code>DiseasePredictionService.predict()</code> preprocesses the image, runs TensorFlow inference, filters probabilities for the selected crop, creates a Grad-CAM heatmap, computes leaf metrics, and saves an overlay image.</li><li>The result is stored in <code>DiseasePrediction</code>.</li><li>The template shows the uploaded image, overlay image, confidence distribution, and recommendations.</li></ol>
+<p>Key file references:</p>
+<ul><li><code>disease/forms.py</code></li><li><code>disease/views.py</code></li><li><code>disease/services.py</code></li><li><code>disease/models.py</code></li><li><code>smart_crop_ai/demo_data.py</code></li><li><code>templates/disease/analyze.html</code></li></ul>
+<h3 id="q12-how-does-form-validation-work-in-the-disease-module">Q12. How does form validation work in the disease module?</h3>
+<p>Answer: The form allows either:</p>
+<ul><li>a real uploaded image, or</li><li>a built-in demo sample.</li></ul>
+<p>The custom <code>clean()</code> method in <code>DiseaseUploadForm</code> raises a validation error if neither is provided. This avoids empty inference requests.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/forms.py</code></li></ul>
+<h3 id="q13-what-model-is-used-for-disease-detection">Q13. What model is used for disease detection?</h3>
+<p>Answer: The shipped disease classifier uses TensorFlow with a MobileNetV2-based transfer learning pipeline. According to the metadata, the model family is <code>MobileNetV2</code>.</p>
+<p>This is a sensible choice because MobileNetV2 is lighter than many larger CNNs and is suitable for academic demos where inference must still run locally.</p>
+<p>Key file references:</p>
+<ul><li><code>models/disease/smart_crop_disease_metadata.json</code></li><li><code>training/disease/train_demo_disease_model.py</code></li></ul>
+<h3 id="q14-how-is-the-uploaded-image-processed-before-prediction">Q14. How is the uploaded image processed before prediction?</h3>
+<p>Answer: Inside <code>DiseasePredictionService</code>:</p>
+<ul><li>raw bytes are decoded with OpenCV,</li><li>the image is converted from BGR to RGB,</li><li>it is resized to the configured image size from metadata,</li><li>pixel values are normalized to the <code>0-1</code> range,</li><li>a batch dimension is added before TensorFlow prediction.</li></ul>
+<p>This is the standard preprocessing step needed before passing the image into the CNN.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/services.py</code></li></ul>
+<h3 id="q15-what-does-crop-aware-filtering-mean-in-this-project">Q15. What does crop-aware filtering mean in this project?</h3>
+<p>Answer: The disease model was trained on multiple crops and multiple classes, but the user also tells the system which crop the leaf belongs to. After the model outputs class probabilities, the service masks out classes that do not belong to that selected crop, then renormalizes the remaining probabilities.</p>
+<p>Why this matters:</p>
+<ul><li>It reduces obviously irrelevant predictions from unrelated crops.</li><li>It makes the diagnosis more practical for a crop-specific workflow.</li></ul>
+<p>Important limitation: If the user selects the wrong crop, the prediction is constrained to the wrong crop family. So crop-aware filtering improves focus, but it also depends on correct crop selection.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/services.py</code></li><li><code>smart_crop_ai/reference_data.py</code></li><li><code>models/disease/smart_crop_disease_metadata.json</code></li></ul>
+<h3 id="q16-how-is-explainability-shown-for-disease-predictions">Q16. How is explainability shown for disease predictions?</h3>
+<p>Answer: The project uses a Grad-CAM style heatmap. The service builds a model that outputs the final convolution layer and the prediction layer, computes gradients for the predicted class, converts that into a heatmap, and overlays the heatmap on the original image with OpenCV.</p>
+<p>The UI calls this an <code>OpenCV + Grad-CAM overlay</code>.</p>
+<p>This gives the student a strong viva point: the project does not only output a class name, it also shows where the model focused in the image.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/services.py</code></li><li><code>templates/disease/analyze.html</code></li></ul>
+<h3 id="q17-what-extra-metrics-are-computed-in-the-disease-module-beyond-class-prediction">Q17. What extra metrics are computed in the disease module beyond class prediction?</h3>
+<p>Answer: Two extra percentages are computed:</p>
+<ul><li><code>plant_coverage_pct</code>: how much of the image seems to be leaf area,</li><li><code>hotspot_pct</code>: how much of the visible leaf area falls inside the high-activation stress region.</li></ul>
+<p>These are used in the result summary and also influence alert severity.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/services.py</code></li><li><code>smart_crop_ai/monitoring.py</code></li></ul>
+<h3 id="q18-how-are-disease-recommendations-generated">Q18. How are disease recommendations generated?</h3>
+<p>Answer: Disease recommendations are generated by a rule-based function, not by the TensorFlow model directly. The function <code>build_disease_recommendations()</code> maps disease labels like <code>Late Blight</code>, <code>Common Rust</code>, or <code>Tomato Yellow Leaf Curl Virus</code> to guidance text.</p>
+<p>Then it adds a final note depending on confidence and hotspot level:</p>
+<ul><li>strong case if confidence is high and hotspot is pronounced,</li><li>softer scouting guidance if confidence is moderate.</li></ul>
+<p>This hybrid design is important: AI is used for classification, while recommendations are rule-based and easier to explain.</p>
+<p>Key file references:</p>
+<ul><li><code>recommendations/services.py</code></li><li><code>disease/services.py</code></li></ul>
+<h3 id="q19-what-is-stored-in-the-disease-database-table">Q19. What is stored in the disease database table?</h3>
+<p>Answer: The <code>DiseasePrediction</code> model stores:</p>
+<ul><li>crop,</li><li>original image,</li><li>overlay image,</li><li>predicted label,</li><li>confidence,</li><li>summary,</li><li>probabilities as JSON,</li><li>recommendations as JSON,</li><li>plant coverage percentage,</li><li>hotspot percentage,</li><li>creation timestamp.</li></ul>
+<p>Using <code>JSONField</code> is practical here because probabilities and recommendation lists have variable length and do not need separate normalized tables for this academic scope.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/models.py</code></li><li><code>disease/migrations/0001_initial.py</code></li></ul>
+<h3 id="q20-what-are-the-main-strengths-and-limitations-of-the-disease-module">Q20. What are the main strengths and limitations of the disease module?</h3>
+<p>Answer: Strengths:</p>
+<ul><li>multi-crop coverage,</li><li>real public datasets,</li><li>explainability overlay,</li><li>demo samples for reproducibility,</li><li>persisted prediction history.</li></ul>
+<p>Limitations:</p>
+<ul><li>it is still a classification model trained mainly on public datasets, not a clinically certified agronomy system,</li><li>real-field generalization is limited by the gap between cleaner datasets and uncontrolled farm imagery,</li><li>crop selection by user affects crop-aware filtering.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>docs/datasets.md</code></li><li><code>docs/architecture.md</code></li><li><code>models/disease/smart_crop_disease_metadata.json</code></li></ul>
+<h2 id="4-yield-forecasting-module">4. Yield Forecasting Module</h2>
+<h3 id="q21-what-is-the-yield-prediction-flow-from-form-to-output">Q21. What is the yield prediction flow from form to output?</h3>
+<p>Answer: The yield flow is:</p>
+<ol><li>User opens <code>/yield/</code>.</li><li>The form is prefilled with a default demo payload.</li><li>The user chooses crop, district, season, year, rainfall, temperature, soil values, nutrients, and cultivated area.</li><li><code>yield_forecast()</code> validates the form and calls <code>get_yield_service()</code>.</li><li><code>YieldPredictionService.predict()</code> builds the feature frame required by the trained scikit-learn pipeline.</li><li>The service predicts yield in <code>t/ha</code>.</li><li>It compares the result with the historical baseline.</li><li>It generates top factors and agronomic recommendations.</li><li>The result is saved in <code>YieldPrediction</code>.</li><li>The page renders the forecast, historical chart, and recommendation cards.</li></ol>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/forms.py</code></li><li><code>yield_prediction/views.py</code></li><li><code>yield_prediction/services.py</code></li><li><code>yield_prediction/models.py</code></li><li><code>templates/yield_prediction/forecast.html</code></li></ul>
+<h3 id="q22-what-model-is-used-for-yield-forecasting">Q22. What model is used for yield forecasting?</h3>
+<p>Answer: The active yield model is a scikit-learn <code>RandomForestRegressor</code>. The metadata shows that it was selected as the best model among:</p>
+<ul><li>linear regression,</li><li>random forest,</li><li>histogram gradient boosting.</li></ul>
+<p>It won because it achieved the best evaluation metrics in the shipped metadata.</p>
+<p>Key file references:</p>
+<ul><li><code>models/yield/smart_crop_yield_metadata.json</code></li><li><code>training/yield/train_yield_model.py</code></li></ul>
+<h3 id="q23-why-is-scikit-learn-more-suitable-than-deep-learning-for-the-yield-task-here">Q23. Why is scikit-learn more suitable than deep learning for the yield task here?</h3>
+<p>Answer: Yield prediction in this repository is based on structured tabular data, not images. For tabular data of this scale, tree-based models are often more practical than deep neural networks because they:</p>
+<ul><li>train faster,</li><li>require less tuning,</li><li>work well on mixed numerical and encoded categorical features,</li><li>are easier to compare in a small academic project.</li></ul>
+<p>That is why the student can defend scikit-learn as a more appropriate engineering choice for this dataset.</p>
+<p>Key file references:</p>
+<ul><li><code>training/yield/train_yield_model.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q24-what-features-does-the-yield-model-actually-use">Q24. What features does the yield model actually use?</h3>
+<p>Answer: The shipped model uses these feature columns:</p>
+<ul><li><code>crop</code></li><li><code>year</code></li><li><code>rainfall_mm</code></li><li><code>avg_temp_c</code></li><li><code>soil_ph</code></li><li><code>organic_carbon_pct</code></li><li><code>soil_nitrogen_ppm</code></li><li><code>cultivated_area_hectares</code></li><li><code>pbs_crops_output_constant_rs_mn</code></li><li><code>pbs_important_crops_output_constant_rs_mn</code></li></ul>
+<p>Very important viva detail: The form collects <code>nitrogen</code>, <code>phosphorus</code>, and <code>potassium</code>, but the trained model directly uses nitrogen only. Phosphorus and potassium are mainly used in the rule-based recommendation layer, not in the current trained ML feature list.</p>
+<p>That is a subtle but correct answer if the examiner asks, &quot;Do all form inputs go into the model?&quot;</p>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/services.py</code></li><li><code>yield_prediction/forms.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q25-how-is-the-feature-frame-built-at-runtime">Q25. How is the feature frame built at runtime?</h3>
+<p>Answer: The service reads the model&#x27;s expected feature columns from metadata and constructs a one-row pandas DataFrame. If the model expects <code>soil_nitrogen_ppm</code>, the service maps it from the form field <code>nitrogen_ppm</code>.</p>
+<p>For annual macro features, the service also fills PBS-based economic context values using the nearest available year from metadata. This makes the runtime logic consistent with how the training dataset was assembled.</p>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/services.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q26-what-historical-baseline-is-used-to-compare-predicted-yield">Q26. What historical baseline is used to compare predicted yield?</h3>
+<p>Answer: The current shipped metadata uses <code>Pakistan historical average</code>, not district-labeled ground-truth yield history. The service compares the predicted yield against that national historical average for the selected crop.</p>
+<p>This is one of the most important honesty points in viva:</p>
+<ul><li>district is used as operational context for weather defaults, soil defaults, and recommendation context,</li><li>but the historical yield comparison is still Pakistan-level in the shipped artifacts.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>models/yield/smart_crop_yield_metadata.json</code></li><li><code>yield_prediction/services.py</code></li><li><code>docs/datasets.md</code></li><li><code>docs/architecture.md</code></li></ul>
+<h3 id="q27-why-does-the-code-still-accept-an-optional-district-argument-for-history">Q27. Why does the code still accept an optional district argument for history?</h3>
+<p>Answer: The service methods <code>history_for()</code> and <code>_historical_average()</code> are written in a future-ready way. If metadata later becomes district-specific, the service can use nested structures. Right now, because the metadata stores crop-level lists, the district argument is effectively ignored and the crop-level history is returned.</p>
+<p>This is a good answer if the examiner asks whether the code was designed for extension.</p>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/services.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q28-how-are-top-factors-shown-for-the-yield-result">Q28. How are top factors shown for the yield result?</h3>
+<p>Answer: Top factors are generated by <code>_top_factors()</code> in the yield service. They are not SHAP values or model-native feature importances. They are rule-derived interpretation items comparing input values with crop comfort targets, such as:</p>
+<ul><li>rainfall positioning,</li><li>temperature stress,</li><li>nitrogen status,</li><li>organic carbon buffer.</li></ul>
+<p>This means the project offers explainability-like summaries without claiming they are formal causal proofs.</p>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/services.py</code></li><li><code>smart_crop_ai/reference_data.py</code></li></ul>
+<h3 id="q29-how-are-agronomic-recommendations-generated">Q29. How are agronomic recommendations generated?</h3>
+<p>Answer: Agronomic recommendations are produced by <code>build_agronomic_recommendations()</code> in <code>recommendations/services.py</code>. The logic compares the user inputs against crop targets and forecast performance.</p>
+<p>Examples:</p>
+<ul><li>low rainfall or high temperature can trigger irrigation advice,</li><li>low nitrogen can trigger high-priority fertilizer advice,</li><li>low phosphorus or potassium can trigger medium-priority nutrient advice,</li><li>low organic carbon can trigger organic matter recommendations,</li><li>below-average forecast can trigger investigation guidance.</li></ul>
+<p>This is a rule-based recommendation engine attached to an ML forecast, not a second AI model.</p>
+<p>Key file references:</p>
+<ul><li><code>recommendations/services.py</code></li><li><code>yield_prediction/services.py</code></li><li><code>smart_crop_ai/reference_data.py</code></li></ul>
+<h3 id="q30-what-is-stored-in-the-yield-database-table">Q30. What is stored in the yield database table?</h3>
+<p>Answer: The <code>YieldPrediction</code> model stores:</p>
+<ul><li>crop,</li><li>district,</li><li>province,</li><li>season,</li><li>year,</li><li>rainfall,</li><li>temperature,</li><li>soil values,</li><li>NPK inputs,</li><li>cultivated area,</li><li>predicted yield,</li><li>historical average,</li><li>delta versus average,</li><li>summary,</li><li>top factors as JSON,</li><li>recommendations as JSON,</li><li>historical series as JSON,</li><li>timestamp.</li></ul>
+<p>This gives the dashboard enough information to show both numerical history and decision support without recomputing everything on every page load.</p>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/models.py</code></li><li><code>yield_prediction/migrations/0001_initial.py</code></li></ul>
+<h3 id="q31-what-are-the-main-strengths-and-limitations-of-the-yield-module">Q31. What are the main strengths and limitations of the yield module?</h3>
+<p>Answer: Strengths:</p>
+<ul><li>uses real public data sources,</li><li>compares multiple classical ML models,</li><li>stores full forecast history,</li><li>includes smart defaults and demo scenarios,</li><li>separates ML forecast from recommendation logic.</li></ul>
+<p>Limitations:</p>
+<ul><li>historical comparison is Pakistan-level, not district-labeled yield ground truth,</li><li>phosphorus and potassium are not direct model features in the shipped model,</li><li>recommendations are rule-based, not expert-verified agronomy prescriptions.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>docs/datasets.md</code></li><li><code>training/yield/train_yield_model.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h2 id="5-recommendation-center-and-monitoring">5. Recommendation Center And Monitoring</h2>
+<h3 id="q32-what-is-the-recommendation-center">Q32. What is the recommendation center?</h3>
+<p>Answer: The recommendation center is a separate page that collects the latest disease and yield outputs into one decision layer. It shows:</p>
+<ul><li>the latest yield-linked agronomic recommendations,</li><li>the latest disease guidance,</li><li>recent yield items,</li><li>recent disease items,</li><li>alert counts and category counts.</li></ul>
+<p>This makes the app feel like a decision-support dashboard rather than two isolated models.</p>
+<p>Key file references:</p>
+<ul><li><code>recommendations/views.py</code></li><li><code>templates/recommendations/center.html</code></li></ul>
+<h3 id="q33-how-is-alert-severity-computed">Q33. How is alert severity computed?</h3>
+<p>Answer: Alert severity is computed by simple monitoring rules:</p>
+<ul><li>disease severity is high if the label is not healthy and either confidence is high or hotspot percentage is high,</li><li>yield severity depends on recommendation priorities and the absolute forecast deviation from average.</li></ul>
+<p>The labels are:</p>
+<ul><li><code>high</code> -&gt; <code>High Alert</code></li><li><code>medium</code> -&gt; <code>Watch</code></li><li><code>low</code> -&gt; <code>Stable</code></li></ul>
+<p>This is deliberately simple and explainable logic.</p>
+<p>Key file references:</p>
+<ul><li><code>smart_crop_ai/monitoring.py</code></li><li><code>dashboard/services.py</code></li></ul>
+<h3 id="q34-why-separate-ai-inference-from-recommendation-and-alert-logic">Q34. Why separate AI inference from recommendation and alert logic?</h3>
+<p>Answer: This is one of the best design choices to defend in viva. The project separates:</p>
+<ul><li>AI/ML tasks: disease classification and yield regression,</li><li>rule-based tasks: recommendations, alert severity, and operational guidance.</li></ul>
+<p>Reasons:</p>
+<ul><li>easier to explain,</li><li>easier to test,</li><li>easier to adjust without retraining models,</li><li>safer for an academic system where recommendations should stay auditable.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>disease/services.py</code></li><li><code>yield_prediction/services.py</code></li><li><code>recommendations/services.py</code></li><li><code>smart_crop_ai/monitoring.py</code></li></ul>
+<h3 id="q35-what-do-the-metrics-and-sources-pages-add-to-the-project">Q35. What do the metrics and sources pages add to the project?</h3>
+<p>Answer: They improve academic defensibility. Instead of only showing predictions, the app also shows:</p>
+<ul><li>model metrics,</li><li>dataset scale,</li><li>supported crops and districts,</li><li>candidate model comparison,</li><li>data source descriptions,</li><li>limitations and runtime notes.</li></ul>
+<p>This helps the student answer examiner questions using pages already built into the software.</p>
+<p>Key file references:</p>
+<ul><li><code>dashboard/services.py</code></li><li><code>templates/dashboard/metrics.html</code></li><li><code>templates/dashboard/sources.html</code></li><li><code>models/disease/smart_crop_disease_metadata.json</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h2 id="6-data-models-and-training">6. Data, Models, And Training</h2>
+<h3 id="q36-which-datasets-are-used-in-the-disease-pipeline">Q36. Which datasets are used in the disease pipeline?</h3>
+<p>Answer: The disease pipeline uses public datasets from:</p>
+<ul><li>PlantVillage,</li><li>PlantDoc,</li><li>crop-specific Mendeley datasets for cotton and sugarcane.</li></ul>
+<p>This combination is important because:</p>
+<ul><li>PlantVillage gives a stable baseline,</li><li>PlantDoc adds more field-like images,</li><li>Mendeley expands crop coverage beyond the standard PlantVillage subset.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>docs/datasets.md</code></li><li><code>training/disease/train_demo_disease_model.py</code></li><li><code>models/disease/smart_crop_disease_metadata.json</code></li></ul>
+<h3 id="q37-which-datasets-are-used-in-the-yield-pipeline">Q37. Which datasets are used in the yield pipeline?</h3>
+<p>Answer: The yield pipeline uses:</p>
+<ul><li>FAOSTAT for crop statistics,</li><li>Pakistan Bureau of Statistics for macro-agriculture economic context,</li><li>NASA POWER for weather features,</li><li>SoilGrids for soil features.</li></ul>
+<p>This is a strong answer because it shows the project is not based on random synthetic numbers in the current version.</p>
+<p>Key file references:</p>
+<ul><li><code>docs/datasets.md</code></li><li><code>training/yield/train_yield_model.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q38-how-is-the-disease-training-pipeline-built">Q38. How is the disease training pipeline built?</h3>
+<p>Answer: The training script:</p>
+<ul><li>ensures data directories exist,</li><li>loads PlantVillage images,</li><li>downloads selected PlantDoc images,</li><li>downloads selected Mendeley archives,</li><li>preprocesses images with OpenCV,</li><li>creates a manifest CSV,</li><li>builds a combined dataset,</li><li>splits it into train, validation, and test sets,</li><li>trains a MobileNetV2 transfer-learning model,</li><li>fine-tunes the last part of the base network,</li><li>saves the <code>.keras</code> model and metadata JSON.</li></ul>
+<p>Good viva detail: The split is done using <code>train_test_split</code> with stratification, which is a reasonable method for balanced academic evaluation.</p>
+<p>Key file references:</p>
+<ul><li><code>training/disease/train_demo_disease_model.py</code></li><li><code>data/processed/disease/disease_dataset_manifest.csv</code></li><li><code>models/disease/smart_crop_disease.keras</code></li><li><code>models/disease/smart_crop_disease_metadata.json</code></li></ul>
+<h3 id="q39-how-is-the-yield-training-pipeline-built">Q39. How is the yield training pipeline built?</h3>
+<p>Answer: The yield training script:</p>
+<ul><li>downloads or refreshes official source files,</li><li>extracts FAOSTAT crop panel data,</li><li>parses PBS annual accounts,</li><li>fetches NASA POWER monthly climate data,</li><li>samples SoilGrids properties around reference districts,</li><li>merges everything into one processed CSV,</li><li>compares three candidate regressors,</li><li>selects the best one by evaluation metrics,</li><li>saves the trained joblib pipeline and metadata JSON.</li></ul>
+<p>This is strong to mention because it shows the project includes a reproducible data-engineering path, not just a hard-coded model file.</p>
+<p>Key file references:</p>
+<ul><li><code>training/yield/train_yield_model.py</code></li><li><code>data/processed/pakistan_multi_crop_yield_dataset.csv</code></li><li><code>models/yield/smart_crop_yield_model.joblib</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q40-what-are-the-shipped-model-performance-numbers">Q40. What are the shipped model performance numbers?</h3>
+<p>Answer: Disease model:</p>
+<ul><li>model family: <code>MobileNetV2</code></li><li>validation accuracy after fine-tuning: <code>81.04%</code></li><li>test accuracy: <code>80.60%</code></li><li>image count used: <code>5768</code></li><li>classes covered: <code>24</code></li></ul>
+<p>Yield model:</p>
+<ul><li>best model: <code>Random Forest</code></li><li>RMSE: <code>1.9055</code></li><li>MAE: <code>1.1597</code></li><li>R2: <code>0.9949</code></li><li>feature count: <code>10</code></li><li>history span: <code>2001-2024</code></li></ul>
+<p>These numbers are already readable from the app&#x27;s metrics page because the page is populated from metadata files.</p>
+<p>Key file references:</p>
+<ul><li><code>models/disease/smart_crop_disease_metadata.json</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li><li><code>templates/dashboard/metrics.html</code></li></ul>
+<h3 id="q41-what-model-artifacts-are-already-included-in-the-repository">Q41. What model artifacts are already included in the repository?</h3>
+<p>Answer: The repository already includes:</p>
+<ul><li><code>models/disease/smart_crop_disease.keras</code></li><li><code>models/disease/smart_crop_disease_metadata.json</code></li><li><code>models/yield/smart_crop_yield_model.joblib</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li><li><code>data/processed/disease/disease_dataset_manifest.csv</code></li><li><code>data/processed/pakistan_multi_crop_yield_dataset.csv</code></li></ul>
+<p>That means normal project use does not require retraining.</p>
+<p>Key file references:</p>
+<ul><li><code>README.md</code></li><li><code>docs/datasets.md</code></li></ul>
+<h3 id="q42-what-dependencies-are-needed-for-runtime-and-for-retraining">Q42. What dependencies are needed for runtime and for retraining?</h3>
+<p>Answer: For normal runtime, <code>requirements.txt</code> is enough. It includes Django, TensorFlow CPU, OpenCV, pandas, NumPy, Pillow, scikit-learn, joblib, and dotenv support.</p>
+<p>For retraining, <code>requirements-training.txt</code> adds extra packages such as:</p>
+<ul><li><code>openpyxl</code></li><li><code>requests</code></li><li><code>rioxarray</code></li><li><code>soilgrids</code></li></ul>
+<p>This separation is good because it keeps normal app setup lighter than the training environment.</p>
+<p>Key file references:</p>
+<ul><li><code>requirements.txt</code></li><li><code>requirements-training.txt</code></li><li><code>README.md</code></li></ul>
+<h2 id="6a-model-training-deep-dive">6A. Model Training Deep Dive</h2>
+<h3 id="q42a-what-exact-default-training-settings-are-used-for-the-disease-model">Q42A. What exact default training settings are used for the disease model?</h3>
+<p>Answer: The default disease training configuration in <code>training/disease/train_demo_disease_model.py</code> is:</p>
+<ul><li>image size: <code>160 x 160</code></li><li>maximum PlantVillage images per class: <code>220</code></li><li>maximum PlantDoc images per class: <code>55</code></li><li>maximum Mendeley images per class: <code>220</code></li><li>head training epochs: <code>3</code></li><li>fine-tuning epochs: <code>2</code></li><li>batch size: <code>24</code></li><li>initial optimizer: Adam with learning rate <code>1e-3</code></li><li>fine-tuning optimizer: Adam with learning rate <code>1e-4</code></li><li>early stopping: monitor <code>val_accuracy</code>, patience <code>2</code>, restore best weights</li></ul>
+<p>The augmentation pipeline applies:</p>
+<ul><li>horizontal flip,</li><li>small rotation of <code>0.05</code>,</li><li>small zoom of <code>0.08</code>.</li></ul>
+<p>Important viva point: These are modest settings chosen for a practical local academic project, not a large compute-intensive experiment.</p>
+<p>Key file references:</p>
+<ul><li><code>training/disease/train_demo_disease_model.py</code></li></ul>
+<h3 id="q42b-how-is-the-disease-dataset-split-and-why-is-that-reasonable">Q42B. How is the disease dataset split, and why is that reasonable?</h3>
+<p>Answer: The disease dataset is split in two stages:</p>
+<ul><li>first split: <code>70%</code> train and <code>30%</code> temporary set,</li><li>second split: the temporary set is divided equally into validation and test,</li><li>final result: <code>70%</code> train, <code>15%</code> validation, <code>15%</code> test.</li></ul>
+<p>The split is stratified using class indices. That means class balance is preserved across train, validation, and test sets.</p>
+<p>Why this is reasonable:</p>
+<ul><li>train set is used for fitting,</li><li>validation set is used for early stopping and tuning stage control,</li><li>test set is kept for final evaluation,</li><li>stratification avoids distorted results from class imbalance.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>training/disease/train_demo_disease_model.py</code></li></ul>
+<h3 id="q42c-what-exactly-happens-during-disease-fine-tuning">Q42C. What exactly happens during disease fine-tuning?</h3>
+<p>Answer: The disease model starts with MobileNetV2 as a pretrained backbone with ImageNet weights. In the first stage, the backbone is frozen and only the new task-specific layers are trained. In the second stage, the backbone is unfrozen partially:</p>
+<ul><li>all layers except the last <code>30</code> remain frozen,</li><li>batch normalization layers are kept frozen,</li><li>the model is trained again with a lower learning rate.</li></ul>
+<p>This is a standard transfer-learning strategy because:</p>
+<ul><li>the pretrained model already contains useful visual features,</li><li>the custom head learns crop-disease classes,</li><li>partial unfreezing lets the network adapt without destabilizing all pretrained weights.</li></ul>
+<p>Key file references:</p>
+<ul><li><code>training/disease/train_demo_disease_model.py</code></li></ul>
+<h3 id="q42d-what-exact-training-design-is-used-for-the-yield-model">Q42D. What exact training design is used for the yield model?</h3>
+<p>Answer: The yield training pipeline in <code>training/yield/train_yield_model.py</code> does the following:</p>
+<ul><li>builds one processed tabular dataset from FAOSTAT, PBS, NASA POWER, and SoilGrids,</li><li>defines <code>10</code> feature columns,</li><li>one-hot encodes the categorical <code>crop</code> field,</li><li>passes numerical fields through unchanged,</li><li>compares three candidate models:</li><li><code>LinearRegression()</code></li><li><code>RandomForestRegressor(n_estimators=320, random_state=42, max_depth=12)</code></li><li><code>HistGradientBoostingRegressor(random_state=42, max_depth=6)</code></li></ul>
+<p>The best pipeline is saved as:</p>
+<ul><li><code>models/yield/smart_crop_yield_model.joblib</code></li></ul>
+<p>Important viva point: This is a classical tabular ML pipeline with preprocessing and model combined into one saved scikit-learn pipeline object.</p>
+<p>Key file references:</p>
+<ul><li><code>training/yield/train_yield_model.py</code></li><li><code>models/yield/smart_crop_yield_model.joblib</code></li></ul>
+<h3 id="q42e-how-is-the-yield-dataset-split-and-why-is-that-stronger-than-a-random-split-here">Q42E. How is the yield dataset split, and why is that stronger than a random split here?</h3>
+<p>Answer: The yield dataset is split by time, not randomly:</p>
+<ul><li>training data: years <code>&lt;= max_year - 3</code></li><li>test data: years <code>&gt; max_year - 3</code></li></ul>
+<p>Given the current shipped dataset span of <code>2001-2024</code>, that means:</p>
+<ul><li>train period: <code>2001-2021</code></li><li>test period: <code>2022-2024</code></li></ul>
+<p>Why this is stronger:</p>
+<ul><li>it better reflects forecasting by testing on future years,</li><li>it reduces temporal leakage,</li><li>it is more realistic than randomly mixing earlier and later years together.</li></ul>
+<p>Important honesty point: The script does not currently use cross-validation for the yield candidates. It uses a time-based holdout test, which is reasonable for this project but still not the strongest possible experimental design.</p>
+<p>Key file references:</p>
+<ul><li><code>training/yield/train_yield_model.py</code></li><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h3 id="q42f-what-feature-engineering-and-preprocessing-happen-in-the-yield-training-pipeline">Q42F. What feature engineering and preprocessing happen in the yield training pipeline?</h3>
+<p>Answer: The yield pipeline performs several preprocessing steps:</p>
+<ul><li>FAOSTAT crop data is filtered to Pakistan, target crops, and years from <code>2001</code> onward.</li><li>FAOSTAT <code>yield_kg_ha</code> is converted into <code>yield_t_ha</code>.</li><li>PBS annual account columns are parsed into usable numeric years.</li><li>NASA POWER monthly data is aggregated into seasonal rainfall and average temperature.</li><li>SoilGrids raster values are sampled and averaged into soil features.</li><li>district-level reference values are averaged across crop-specific reference districts.</li><li>all data sources are merged into one processed dataset.</li><li>missing rows are dropped before model training.</li><li><code>crop</code> is one-hot encoded using <code>OneHotEncoder</code>.</li></ul>
+<p>This is important to explain because the intelligence of the yield model is not only in the regressor. It is also in how the multi-source dataset is assembled.</p>
+<p>Key file references:</p>
+<ul><li><code>training/yield/train_yield_model.py</code></li><li><code>data/processed/pakistan_multi_crop_yield_dataset.csv</code></li></ul>
+<h3 id="q42g-if-the-examiner-asks-how-do-you-retrain-the-models-what-should-the-student-answer">Q42G. If the examiner asks, &quot;How do you retrain the models?&quot;, what should the student answer?</h3>
+<p>Answer: The correct retraining sequence is:</p>
+<p><code>pip install -r requirements.txt</code></p>
+<ol><li>Install runtime dependencies.</li></ol>
+<p><code>pip install -r requirements-training.txt</code></p>
+<ol><li>Install training extras.</li></ol>
+<p><code>python training\\disease\\train_demo_disease_model.py</code></p>
+<ol><li>Retrain the disease model if needed.</li></ol>
+<p><code>python training\\yield\\train_yield_model.py --refresh-sources</code></p>
+<ol><li>Retrain the yield model if needed.</li></ol>
+<p>Important clarification: Retraining is optional. The repository already ships with trained artifacts, so normal project use does not require these steps.</p>
+<p>Key file references:</p>
+<ul><li><code>README.md</code></li><li><code>training/disease/train_demo_disease_model.py</code></li><li><code>training/yield/train_yield_model.py</code></li></ul>
+<h3 id="q42h-what-are-the-strongest-honest-limitations-in-the-training-design">Q42H. What are the strongest honest limitations in the training design?</h3>
+<p>Answer: Disease training limitations:</p>
+<ul><li>public datasets still create a lab-to-field or curated-to-real-world gap,</li><li>crop-aware filtering helps inference, but wrong crop selection can still constrain predictions badly,</li><li>the current setup is a good academic baseline, not a medical-grade or agronomy-certified diagnostic system.</li></ul>
+<p>Yield training limitations:</p>
+<ul><li>historical comparison remains Pakistan-level rather than district-labeled ground truth,</li><li>the dataset is relatively small compared with large industrial forecasting systems,</li><li>there is no cross-validation or uncertainty estimation in the shipped training script,</li><li>phosphorus and potassium are not direct ML features in the active model.</li></ul>
+<p>This is exactly the kind of honest answer that usually strengthens a viva rather than weakening it.</p>
+<p>Key file references:</p>
+<ul><li><code>docs/datasets.md</code></li><li><code>docs/architecture.md</code></li><li><code>training/disease/train_demo_disease_model.py</code></li><li><code>training/yield/train_yield_model.py</code></li></ul>
+<h3 id="q42i-what-future-training-improvements-would-be-strongest-if-the-project-were-extended">Q42I. What future training improvements would be strongest if the project were extended?</h3>
+<p>Answer: The highest-value next improvements would be:</p>
+<ul><li>collect more real-field Pakistani disease images for better domain adaptation,</li><li>obtain district-labeled historical yield targets instead of relying on Pakistan-level averages,</li><li>add vegetation-index features like <code>NDVI</code> or <code>EVI</code>,</li><li>use stronger evaluation such as time-series cross-validation for yield,</li><li>tune more hyperparameters systematically,</li><li>add uncertainty estimates or calibrated confidence,</li><li>expand ablation studies to show which features matter most.</li></ul>
+<p>This is a strong viva answer because it shows both technical understanding and awareness of how the system could mature beyond the current academic scope.</p>
+<p>Key file references:</p>
+<ul><li><code>docs/datasets.md</code></li><li><code>training/disease/train_demo_disease_model.py</code></li><li><code>training/yield/train_yield_model.py</code></li></ul>
+<h2 id="7-testing-demo-support-and-ui-logic">7. Testing, Demo Support, And UI Logic</h2>
+<h3 id="q43-what-automated-tests-exist-in-the-project">Q43. What automated tests exist in the project?</h3>
+<p>Answer: The repository includes tests for:</p>
+<ul><li>dashboard pages,</li><li>disease upload flow,</li><li>disease demo sample flow,</li><li>disease page crop visibility,</li><li>yield page demo controls,</li><li>yield forecast database creation,</li><li>yield historical range display,</li><li>recommendation center route availability.</li></ul>
+<p>This is not exhaustive enterprise testing, but it is enough to show that the main routes and critical flows were validated.</p>
+<p>Key file references:</p>
+<ul><li><code>dashboard/tests.py</code></li><li><code>disease/tests.py</code></li><li><code>yield_prediction/tests.py</code></li><li><code>recommendations/tests.py</code></li></ul>
+<h3 id="q44-how-do-the-demo-features-help-the-viva">Q44. How do the demo features help the viva?</h3>
+<p>Answer: The project includes built-in demo support for both major AI flows:</p>
+<ul><li>disease demo images such as maize rust, potato late blight, cotton bacterial blight, and sugarcane yellow leaf,</li><li>yield demo scenarios such as balanced maize, heat-stress wheat, and high-potential sugarcane.</li></ul>
+<p>This helps the student present a stable live demo without relying on random external input during viva.</p>
+<p>Key file references:</p>
+<ul><li><code>smart_crop_ai/demo_data.py</code></li><li><code>templates/disease/analyze.html</code></li><li><code>templates/yield_prediction/forecast.html</code></li></ul>
+<h3 id="q45-how-does-district-autofill-work-in-the-yield-page">Q45. How does district autofill work in the yield page?</h3>
+<p>Answer: The backend passes district baseline values and crop defaults into the template as JSON. JavaScript in <code>forecast.html</code> listens for district and crop changes and fills fields such as:</p>
+<ul><li>rainfall,</li><li>temperature,</li><li>soil pH,</li><li>organic carbon,</li><li>season,</li><li>nutrient targets.</li></ul>
+<p>This is a UI productivity feature, not part of the ML model itself.</p>
+<p>Key file references:</p>
+<ul><li><code>yield_prediction/views.py</code></li><li><code>templates/yield_prediction/forecast.html</code></li><li><code>smart_crop_ai/reference_data.py</code></li></ul>
+<h3 id="q46-why-is-lru-cache-used-for-the-model-services">Q46. Why is <code>lru_cache</code> used for the model services?</h3>
+<p>Answer: Both <code>get_disease_service()</code> and <code>get_yield_service()</code> are wrapped with <code>@lru_cache(maxsize=1)</code>. This means the heavy model objects are loaded once and then reused, instead of reloading TensorFlow and joblib artifacts on every request.</p>
+<p>This improves local performance and is a smart optimization to mention in viva.</p>
+<p>Key file references:</p>
+<ul><li><code>disease/services.py</code></li><li><code>yield_prediction/services.py</code></li></ul>
+<h2 id="8-important-files-the-student-should-know">8. Important Files The Student Should Know</h2>
+<p>If the examiner asks, &quot;Where in code is that implemented?&quot;, these are the best files to mention quickly:</p>
+<p>Runtime configuration, SQLite setup, model artifact paths, static and media paths.</p>
+<ul><li><code>smart_crop_ai/settings.py</code></li></ul>
+<p>Top-level route wiring.</p>
+<ul><li><code>smart_crop_ai/urls.py</code></li></ul>
+<p>Crop profiles, district profiles, and disease class definitions.</p>
+<ul><li><code>smart_crop_ai/reference_data.py</code></li></ul>
+<p>Built-in demo scenarios for viva-safe testing.</p>
+<ul><li><code>smart_crop_ai/demo_data.py</code></li></ul>
+<p>Alert severity rules and labels.</p>
+<ul><li><code>smart_crop_ai/monitoring.py</code></li></ul>
+<p>Dashboard aggregation logic, metrics loading, sources page context, chart point generation.</p>
+<ul><li><code>dashboard/services.py</code></li></ul>
+<p>Validates that either an image or demo sample is provided.</p>
+<ul><li><code>disease/forms.py</code></li></ul>
+<p>Main disease request handling and database save.</p>
+<ul><li><code>disease/views.py</code></li></ul>
+<p>TensorFlow inference, preprocessing, crop-aware filtering, Grad-CAM, overlay saving.</p>
+<ul><li><code>disease/services.py</code></li></ul>
+<p>Disease prediction schema in SQLite.</p>
+<ul><li><code>disease/models.py</code></li></ul>
+<p>Forecast input schema for the yield model.</p>
+<ul><li><code>yield_prediction/forms.py</code></li></ul>
+<p>Yield forecast request handling and result persistence.</p>
+<ul><li><code>yield_prediction/views.py</code></li></ul>
+<p>Feature-frame construction, scikit-learn prediction, top factors, historical comparison.</p>
+<ul><li><code>yield_prediction/services.py</code></li></ul>
+<p>Yield prediction schema in SQLite.</p>
+<ul><li><code>yield_prediction/models.py</code></li></ul>
+<p>Rule-based agronomic and disease recommendation logic.</p>
+<ul><li><code>recommendations/services.py</code></li></ul>
+<p>Combined recommendation center.</p>
+<ul><li><code>recommendations/views.py</code></li></ul>
+<p>Disease dataset assembly and TensorFlow training pipeline.</p>
+<ul><li><code>training/disease/train_demo_disease_model.py</code></li></ul>
+<p>Yield dataset assembly and scikit-learn training pipeline.</p>
+<ul><li><code>training/yield/train_yield_model.py</code></li></ul>
+<p>Disease metrics, class counts, and model configuration.</p>
+<ul><li><code>models/disease/smart_crop_disease_metadata.json</code></li></ul>
+<p>Yield model choice, metrics, history, and feature columns.</p>
+<ul><li><code>models/yield/smart_crop_yield_metadata.json</code></li></ul>
+<h2 id="9-high-value-viva-defense-lines">9. High-Value Viva Defense Lines</h2>
+<p>These are short, strong statements the student can say with confidence:</p>
+<ul><li>&quot;The active repository is a Django web application; the earlier Next.js and FastAPI prototype is not the current runtime.&quot;</li><li>&quot;The project uses a hybrid design: AI for prediction, rule-based logic for recommendations and alerting.&quot;</li><li>&quot;Disease detection uses TensorFlow MobileNetV2 transfer learning with Grad-CAM-style explainability.&quot;</li><li>&quot;Yield forecasting uses a scikit-learn Random Forest trained on tabular data, which is more suitable than a CNN for this problem.&quot;</li><li>&quot;SQLite was chosen for local handover simplicity and zero-setup demonstration.&quot;</li><li>&quot;The current historical yield comparison is Pakistan-level, while district is used as operational context for weather, soil defaults, and recommendations.&quot;</li><li>&quot;Not every form input is a direct ML feature; phosphorus and potassium mostly feed the rule-based recommendation layer in the shipped version.&quot;</li><li>&quot;The app stores prediction history so the dashboard can act like a monitoring board, not just a single prediction form.&quot;</li></ul>
+<h2 id="10-things-the-student-must-not-overclaim">10. Things The Student Must Not Overclaim</h2>
+<p>These points are important. Saying the wrong thing here can weaken the viva answer:</p>
+<ul><li>Do not say the yield baseline is district ground truth. The shipped metadata says <code>Pakistan historical average</code>.</li><li>Do not say every agronomic recommendation comes from AI. The recommendations are rule-based.</li><li>Do not say the yield model uses all NPK values directly. The current feature list directly uses nitrogen, not phosphorus and potassium.</li><li>Do not say the system is deployed as a cloud production platform. The repository is designed for local web deployment.</li><li>Do not say the disease model was trained only on Pakistani farm images. It uses public datasets like PlantVillage, PlantDoc, and Mendeley crop disease sets.</li><li>Do not say the project has multi-user production scaling. SQLite and the current setup target local academic usage.</li></ul>
+<h2 id="11-suggested-live-demo-flow-for-viva">11. Suggested Live Demo Flow For Viva</h2>
+<h3 id="q47-how-should-the-student-present-the-demo-in-5-to-7-minutes">Q47. How should the student present the demo in 5 to 7 minutes?</h3>
+<p>Answer: Use this order:</p>
+<p>Explain that the dashboard combines monitoring, recent predictions, alert counts, yield history, and evidence access.</p>
+<ol><li>Start at <code>/</code>.</li></ol>
+<p>Show that the project reports real model metrics, dataset counts, and supported crop coverage.</p>
+<ol><li>Open <code>/metrics/</code>.</li></ol>
+<p>Explain the free public data sources and state the main limitation honestly.</p>
+<ol><li>Open <code>/sources/</code>.</li></ol>
+<p>Run one built-in sample like maize rust or potato late blight. Explain:</p>
+<ol><li>Open <code>/disease/</code>.</li></ol>
+<ul><li>upload or demo mode,</li><li>TensorFlow classification,</li><li>crop-aware filtering,</li><li>overlay image,</li><li>recommendations,</li><li>saved history.</li></ul>
+<p>Load a built-in scenario like balanced maize or heat-stress wheat. Explain:</p>
+<ol><li>Open <code>/yield/</code>.</li></ol>
+<ul><li>district autofill,</li><li>tabular features,</li><li>Random Forest prediction,</li><li>comparison with historical average,</li><li>top factors,</li><li>agronomic recommendations.</li></ul>
+<p>Show that the system combines the latest disease and yield guidance into one monitoring surface.</p>
+<ol><li>Open <code>/recommendations/</code>.</li></ol>
+<p>Show stored records and mention SQLite persistence.</p>
+<ol><li>Open <code>/history/</code>.</li></ol>
+<p>Key file references:</p>
+<ul><li><code>templates/dashboard/home.html</code></li><li><code>templates/dashboard/metrics.html</code></li><li><code>templates/dashboard/sources.html</code></li><li><code>templates/disease/analyze.html</code></li><li><code>templates/yield_prediction/forecast.html</code></li><li><code>templates/recommendations/center.html</code></li><li><code>templates/dashboard/history.html</code></li></ul>
+<h2 id="12-rapid-fire-viva-questions-and-short-answers">12. Rapid-Fire Viva Questions And Short Answers</h2>
+<h3 id="q48-what-database-is-used">Q48. What database is used?</h3>
+<p>Answer: SQLite, configured in <code>smart_crop_ai/settings.py</code>.</p>
+<h3 id="q49-why-sqlite">Q49. Why SQLite?</h3>
+<p>Answer: Because this repository is intended for zero-setup local handover and viva demonstration, not production-scale multi-user deployment.</p>
+<h3 id="q50-what-framework-powers-the-web-app">Q50. What framework powers the web app?</h3>
+<p>Answer: Django.</p>
+<h3 id="q51-which-part-uses-tensorflow">Q51. Which part uses TensorFlow?</h3>
+<p>Answer: The disease detection module.</p>
+<h3 id="q52-which-part-uses-scikit-learn">Q52. Which part uses scikit-learn?</h3>
+<p>Answer: The yield forecasting module.</p>
+<h3 id="q53-is-the-recommendation-center-itself-an-ai-model">Q53. Is the recommendation center itself an AI model?</h3>
+<p>Answer: No. It aggregates outputs and rule-based guidance from other parts of the system.</p>
+<h3 id="q54-how-are-disease-results-made-more-explainable">Q54. How are disease results made more explainable?</h3>
+<p>Answer: By generating an OpenCV plus Grad-CAM overlay that highlights model attention areas.</p>
+<h3 id="q55-what-does-the-disease-model-predict">Q55. What does the disease model predict?</h3>
+<p>Answer: A crop-specific disease label with probabilities and confidence.</p>
+<h3 id="q56-how-many-disease-classes-are-in-the-shipped-metadata">Q56. How many disease classes are in the shipped metadata?</h3>
+<p>Answer: 24 classes.</p>
+<h3 id="q57-which-crops-are-supported-for-disease-detection">Q57. Which crops are supported for disease detection?</h3>
+<p>Answer: Maize, potato, tomato, cotton, and sugarcane.</p>
+<h3 id="q58-which-crops-are-supported-for-yield-forecasting">Q58. Which crops are supported for yield forecasting?</h3>
+<p>Answer: Maize, wheat, rice, cotton, and sugarcane.</p>
+<h3 id="q59-what-is-the-best-shipped-yield-model">Q59. What is the best shipped yield model?</h3>
+<p>Answer: Random Forest.</p>
+<h3 id="q60-what-does-rmse-mean">Q60. What does RMSE mean?</h3>
+<p>Answer: Root Mean Squared Error. It measures average prediction error magnitude with more penalty for larger errors.</p>
+<h3 id="q61-what-does-r2-mean">Q61. What does R2 mean?</h3>
+<p>Answer: It measures how much of the variance in the target is explained by the model.</p>
+<h3 id="q62-where-are-trained-models-stored">Q62. Where are trained models stored?</h3>
+<p>Answer: Under <code>models/disease/</code> and <code>models/yield/</code>.</p>
+<h3 id="q63-where-is-prediction-history-stored">Q63. Where is prediction history stored?</h3>
+<p>Answer: In SQLite through Django models <code>DiseasePrediction</code> and <code>YieldPrediction</code>.</p>
+<h3 id="q64-what-is-the-role-of-jsonfield-in-this-project">Q64. What is the role of JSONField in this project?</h3>
+<p>Answer: It stores flexible structured outputs like probabilities, recommendations, top factors, and historical series.</p>
+<h3 id="q65-why-does-the-yield-page-ask-for-district-if-the-history-baseline-is-national">Q65. Why does the yield page ask for district if the history baseline is national?</h3>
+<p>Answer: District still matters for operational context, local defaults, weather and soil assumptions, province labeling, and recommendation relevance.</p>
+<h3 id="q66-how-are-demo-samples-useful">Q66. How are demo samples useful?</h3>
+<p>Answer: They make the system reproducible and viva-safe because the student can demonstrate known working cases quickly.</p>
+<h3 id="q67-is-the-project-retrained-every-time-it-runs">Q67. Is the project retrained every time it runs?</h3>
+<p>Answer: No. The repository ships with trained artifacts. Retraining is optional.</p>
+<h3 id="q68-what-is-one-honest-limitation-to-mention-confidently">Q68. What is one honest limitation to mention confidently?</h3>
+<p>Answer: The historical yield comparison is still Pakistan-level instead of district-labeled ground truth.</p>
+<h3 id="q69-what-is-another-honest-limitation">Q69. What is another honest limitation?</h3>
+<p>Answer: Agronomic recommendations are rule-based decision support, not expert-certified prescriptions.</p>
+<h3 id="q70-what-makes-the-project-more-than-a-simple-ml-notebook">Q70. What makes the project more than a simple ML notebook?</h3>
+<p>Answer: It is an integrated web application with forms, persistence, dashboards, metrics pages, demo mode, recommendations, and tests.</p>
+<h2 id="13-final-revision-sheet">13. Final Revision Sheet</h2>
+<p>If the student has only 2 minutes before viva, remember these points:</p>
+<ul><li>The project is a Django smart agriculture dashboard.</li><li>It has three major user-facing functions: disease detection, yield forecasting, and recommendations.</li><li>Disease detection uses TensorFlow MobileNetV2 and Grad-CAM-style explainability.</li><li>Yield forecasting uses a scikit-learn Random Forest on tabular data.</li><li>Recommendations and alert levels are rule-based.</li><li>Data sources are public: PlantVillage, PlantDoc, Mendeley, FAOSTAT, PBS, NASA POWER, and SoilGrids.</li><li>Database is SQLite.</li><li>Models are already included in the repository.</li><li>The major limitation is that yield history comparison is Pakistan-level, not district ground truth.</li><li>The student should never claim that all recommendations come from AI.</li></ul>
+<h2 id="14-best-closing-line-for-viva">14. Best Closing Line For Viva</h2>
+<p>If the examiner asks for a short conclusion, the student can say:</p>
+<p>&quot;This project is a complete local decision-support dashboard for crop analysis. Its strength is not only the use of AI models, but the integration of prediction, explainability, recommendations, persistence, and evidence pages in one Django system. At the same time, I clearly recognize its current limitations, especially the Pakistan-level yield baseline and the rule-based nature of recommendation logic.&quot;</p>
+  </main>
+</body>
+</html>
